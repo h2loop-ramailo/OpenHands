@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useCreateConversation } from "#/hooks/mutation/use-create-conversation";
 import { useIsCreatingConversation } from "#/hooks/use-is-creating-conversation";
 import { BrandButton } from "../settings/brand-button";
-import AllHandsLogo from "#/assets/branding/all-hands-logo-spark.svg?react";
+import H2LoopLogo from "#/assets/branding/h2loop-logo.svg?react";
 
 export function HomeHeader() {
   const {
@@ -20,7 +20,7 @@ export function HomeHeader() {
 
   return (
     <header className="flex flex-col gap-5">
-      <AllHandsLogo />
+      <H2LoopLogo />
 
       <div className="flex items-center justify-between">
         <h1 className="heading">{t("HOME$LETS_START_BUILDING")}</h1>

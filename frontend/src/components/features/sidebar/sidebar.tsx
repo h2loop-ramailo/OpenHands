@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router";
 import { useGitUser } from "#/hooks/query/use-git-user";
 import { UserActions } from "./user-actions";
-import { AllHandsLogoButton } from "#/components/shared/buttons/all-hands-logo-button";
+import { H2LoopLogoButton } from "#/components/shared/buttons/h2loop-logo-button";
 import { DocsButton } from "#/components/shared/buttons/docs-button";
 import { NewProjectButton } from "#/components/shared/buttons/new-project-button";
 import { SettingsButton } from "#/components/shared/buttons/settings-button";
@@ -67,7 +67,7 @@ export function Sidebar() {
         <nav className="flex flex-row md:flex-col items-center justify-between w-full h-auto md:w-auto md:h-full">
           <div className="flex flex-row md:flex-col items-center gap-[26px]">
             <div className="flex items-center justify-center">
-              <AllHandsLogoButton />
+              <H2LoopLogoButton />
             </div>
             <NewProjectButton disabled={settings?.EMAIL_VERIFIED === false} />
             <ConversationPanelButton
