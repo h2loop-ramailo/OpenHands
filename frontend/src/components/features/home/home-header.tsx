@@ -37,9 +37,7 @@ export function HomeHeader() {
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="text-sm max-w-[424px]">
-          {t("HOME$OPENHANDS_DESCRIPTION")}
-        </p>
+        <p className="text-sm max-w-[424px]">{t("HOME$H2LOOP_DESCRIPTION")}</p>
         <p className="text-sm">
           {t("HOME$NOT_SURE_HOW_TO_START")}{" "}
           <a

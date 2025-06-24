@@ -78,7 +78,7 @@ export function SystemMessageModal({
               {systemMessage.openhands_version && (
                 <div className="text-sm">
                   <span className="font-semibold text-gray-300">
-                    {t("SYSTEM_MESSAGE_MODAL$OPENHANDS_VERSION")}
+                    {t("SYSTEM_MESSAGE_MODAL$H2LOOP_VERSION")}
                   </span>{" "}
                   <span className="text-gray-100">
                     {systemMessage.openhands_version}
