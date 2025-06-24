@@ -39,7 +39,7 @@ export function APIKeyInput({ isDisabled, isSet }: APIKeyInputProps) {
       <p className="text-sm text-[#A3A3A3]">
         {t(I18nKey.API$DONT_KNOW_KEY)}{" "}
         <a
-          href="https://docs.all-hands.dev/usage/llms"
+          href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
           rel="noreferrer noopener"
           target="_blank"
           className="underline underline-offset-2"

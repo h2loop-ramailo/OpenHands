@@ -41,7 +41,7 @@ export function HomeHeader() {
         <p className="text-sm">
           {t("HOME$NOT_SURE_HOW_TO_START")}{" "}
           <a
-            href="https://docs.all-hands.dev/usage/getting-started"
+            href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
             target="_blank"
             rel="noopener noreferrer"
             className="underline underline-offset-2"
