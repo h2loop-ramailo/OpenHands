@@ -20,7 +20,7 @@ export function HomeHeader() {
 
   return (
     <header className="flex flex-col gap-5">
-      <H2LoopLogo />
+      <H2LoopLogo width={100} height={100} />
 
       <div className="flex items-center justify-between">
         <h1 className="heading">{t("HOME$LETS_START_BUILDING")}</h1>
