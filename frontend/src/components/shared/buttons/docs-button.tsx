@@ -13,7 +13,7 @@ export function DocsButton({ disabled = false }: DocsButtonProps) {
     <TooltipButton
       tooltip={t(I18nKey.SIDEBAR$DOCS)}
       ariaLabel={t(I18nKey.SIDEBAR$DOCS)}
-      href="https://docs.all-hands.dev"
+      href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
       disabled={disabled}
     >
       <DocsIcon
