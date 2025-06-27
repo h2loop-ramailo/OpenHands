@@ -280,7 +280,7 @@ function LlmSettingsScreen() {
                   currentModel={
                     settings.LLM_MODEL || "anthropic/claude-sonnet-4-20250514"
                   }
-                  onChange={handleModelIsDirty}
+                  onModelChange={handleModelIsDirty}
                 />
               )}
 
