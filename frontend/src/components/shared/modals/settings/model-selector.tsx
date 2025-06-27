@@ -14,14 +14,16 @@ interface ModelSelectorProps {
   isDisabled?: boolean;
   models: Record<string, { separator: string; models: string[] }>;
   currentModel?: string;
-  onChange?: (model: string | null) => void;
+  onProviderChange?: (provider: string | null) => void;
+  onModelChange?: (model: string | null) => void;
 }
 
 export function ModelSelector({
   isDisabled,
   models,
   currentModel,
-  onChange,
+  onProviderChange,
+  onModelChange,
 }: ModelSelectorProps) {
   const [, setLitellmId] = React.useState<string | null>(null);
   const [selectedProvider, setSelectedProvider] = React.useState<string | null>(
@@ -33,7 +35,6 @@ export function ModelSelector({
     if (currentModel) {
       // runs when resetting to defaults
       const { provider, model } = extractModelAndProvider(currentModel);
-
       setLitellmId(currentModel);
       setSelectedProvider(provider);
       setSelectedModel(model);
@@ -43,9 +44,9 @@ export function ModelSelector({
   const handleChangeProvider = (provider: string) => {
     setSelectedProvider(provider);
     setSelectedModel(null);
-
     const separator = models[provider]?.separator || "";
     setLitellmId(provider + separator);
+    onProviderChange?.(provider);
   };
 
   const handleChangeModel = (model: string) => {
@@ -57,12 +58,14 @@ export function ModelSelector({
     }
     setLitellmId(fullModel);
     setSelectedModel(model);
-    onChange?.(fullModel);
+    onModelChange?.(fullModel);
   };
 
   const clear = () => {
     setSelectedProvider(null);
     setLitellmId(null);
+    onProviderChange?.(null);
+    onModelChange?.(null);
   };
 
   const { t } = useTranslation();

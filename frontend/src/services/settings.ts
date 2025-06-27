@@ -3,11 +3,11 @@ import { Settings } from "#/types/settings";
 export const LATEST_SETTINGS_VERSION = 5;
 
 export const DEFAULT_SETTINGS: Settings = {
-  LLM_MODEL: "anthropic/claude-sonnet-4-20250514",
-  LLM_BASE_URL: "",
+  LLM_MODEL: "hosted_vllm/Qwen/Qwen2.5-Coder-32B-Instruct-AWQ",
+  LLM_BASE_URL: "https://h2loop--qwen25-coder-32b-serve.modal.run/v1",
+  LLM_API_KEY_SET: true,
   AGENT: "CodeActAgent",
   LANGUAGE: "en",
-  LLM_API_KEY_SET: false,
   SEARCH_API_KEY_SET: false,
   CONFIRMATION_MODE: false,
   SECURITY_ANALYZER: "",

@@ -53,4 +53,6 @@ def get_supported_llm_models(config: OpenHandsConfig) -> list[str]:
             except httpx.HTTPError as e:
                 logger.error(f'Error getting OLLAMA models: {e}')
 
+    # Always include the custom model
+    model_list.append('hosted_vllm/Qwen/Qwen2.5-Coder-32B-Instruct-AWQ')
     return list(sorted(set(model_list)))

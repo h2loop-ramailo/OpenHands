@@ -36,7 +36,7 @@ export function HomeHeader() {
         </BrandButton>
       </div>
 
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <p className="text-sm max-w-[424px]">{t("HOME$H2LOOP_DESCRIPTION")}</p>
         <p className="text-sm">
           {t("HOME$NOT_SURE_HOW_TO_START")}{" "}
@@ -49,7 +49,7 @@ export function HomeHeader() {
             {t("HOME$READ_THIS")}
           </a>
         </p>
-      </div>
+      </div> */}
     </header>
   );
 }
