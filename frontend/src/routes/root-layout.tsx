@@ -15,9 +15,7 @@ import { useConfig } from "#/hooks/query/use-config";
 import { Sidebar } from "#/components/features/sidebar/sidebar";
 import { AuthModal } from "#/components/features/waitlist/auth-modal";
 import { ReauthModal } from "#/components/features/waitlist/reauth-modal";
-import { AnalyticsConsentFormModal } from "#/components/features/analytics/analytics-consent-form-modal";
 import { useSettings } from "#/hooks/query/use-settings";
-import { useMigrateUserConsent } from "#/hooks/use-migrate-user-consent";
 import { useBalance } from "#/hooks/query/use-balance";
 import { SetupPaymentModal } from "#/components/features/payment/setup-payment-modal";
 import { displaySuccessToast } from "#/utils/custom-toast-handlers";
@@ -66,7 +64,6 @@ export default function MainApp() {
   const isOnTosPage = useIsOnTosPage();
   const { data: settings } = useSettings();
   const { error } = useBalance();
-  const { migrateUserConsent } = useMigrateUserConsent();
   const { t } = useTranslation();
 
   const config = useConfig();
@@ -85,8 +82,6 @@ export default function MainApp() {
   // When on TOS page, we don't use the GitHub auth URL
   const effectiveGitHubAuthUrl = isOnTosPage ? null : gitHubAuthUrl;
 
-  const [consentFormIsOpen, setConsentFormIsOpen] = React.useState(false);
-
   // Auto-login if login method is stored in local storage
   useAutoLogin();
 
@@ -99,28 +94,6 @@ export default function MainApp() {
       i18n.changeLanguage(settings.LANGUAGE);
     }
   }, [settings?.LANGUAGE, isOnTosPage]);
-
-  React.useEffect(() => {
-    // Don't show consent form when on TOS page
-    if (!isOnTosPage) {
-      const consentFormModalIsOpen =
-        settings?.USER_CONSENTS_TO_ANALYTICS === null;
-
-      setConsentFormIsOpen(consentFormModalIsOpen);
-    }
-  }, [settings, isOnTosPage]);
-
-  React.useEffect(() => {
-    // Don't migrate user consent when on TOS page
-    if (!isOnTosPage) {
-      // Migrate user consent to the server if it was previously stored in localStorage
-      migrateUserConsent({
-        handleAnalyticsWasPresentInLocalStorage: () => {
-          setConsentFormIsOpen(false);
-        },
-      });
-    }
-  }, [isOnTosPage]);
 
   React.useEffect(() => {
     if (settings?.IS_NEW_USER && config.data?.APP_MODE === "saas") {
@@ -217,13 +190,6 @@ export default function MainApp() {
         />
       )}
       {renderReAuthModal && <ReauthModal />}
-      {config.data?.APP_MODE === "oss" && consentFormIsOpen && (
-        <AnalyticsConsentFormModal
-          onClose={() => {
-            setConsentFormIsOpen(false);
-          }}
-        />
-      )}
 
       {config.data?.FEATURE_FLAGS.ENABLE_BILLING &&
         config.data?.APP_MODE === "saas" &&
