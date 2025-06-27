@@ -25,8 +25,7 @@ const DEFAULT_CUSTOM_PROVIDER = "hosted_vllm";
 const DEFAULT_CUSTOM_MODEL = "hosted_vllm/Qwen/Qwen2.5-Coder-32B-Instruct-AWQ";
 const DEFAULT_CUSTOM_BASE_URL =
   "https://h2loop--qwen25-coder-32b-serve.modal.run/v1";
-const DEFAULT_CUSTOM_API_KEY = import.meta.env
-  .VITE_DEFAULT_CUSTOM_MODEL_API_KEY;
+const DEFAULT_CUSTOM_API_KEY = "super-secret-key";
 
 export function SettingsForm({ settings, models, onClose }: SettingsFormProps) {
   const { mutate: saveUserSettings } = useSaveSettings();
