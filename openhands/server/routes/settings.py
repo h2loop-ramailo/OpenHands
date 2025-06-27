@@ -113,9 +113,11 @@ async def store_llm_settings(
 
     # Convert to Settings model and merge with existing settings
     if existing_settings:
-        # Keep existing LLM settings if not provided
-        if settings.llm_api_key is None:
+        if settings.llm_api_key == "":
+            settings.llm_api_key = None
+        elif settings.llm_api_key is None:
             settings.llm_api_key = existing_settings.llm_api_key
+        # else: keep as provided
         if settings.llm_model is None:
             settings.llm_model = existing_settings.llm_model
         if settings.llm_base_url is None:

@@ -98,8 +98,7 @@ function LlmSettingsScreen() {
     const apiKey = formData.get("llm-api-key-input")?.toString();
     const searchApiKey = formData.get("search-api-key-input")?.toString();
 
-    const fullLlmModel =
-      provider && model && `${provider}/${model}`.toLowerCase();
+    const fullLlmModel = provider && model && `${provider}/${model}`;
 
     saveSettings(
       {
@@ -375,12 +374,12 @@ function LlmSettingsScreen() {
                   )
                 }
               />
-              <HelpLink
+              {/* <HelpLink
                 testId="llm-api-key-help-anchor-advanced"
                 text={t(I18nKey.SETTINGS$DONT_KNOW_API_KEY)}
                 linkText={t(I18nKey.SETTINGS$CLICK_FOR_INSTRUCTIONS)}
                 href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
-              />
+              /> */}
 
               <SettingsInput
                 testId="search-api-key-input"

@@ -22,14 +22,16 @@ const extractAdvancedFormData = (formData: FormData) => {
   const isUsingAdvancedOptions = keys.includes("use-advanced-options");
 
   let CUSTOM_LLM_MODEL: string | undefined;
-  let LLM_BASE_URL: string | undefined;
   let CONFIRMATION_MODE = false;
   let SECURITY_ANALYZER: string | undefined;
   let ENABLE_DEFAULT_CONDENSER = true;
 
+  // Always extract base-url-input and llm-api-key-input if present
+  const LLM_BASE_URL = formData.get("base-url-input")?.toString();
+  const LLM_API_KEY = formData.get("llm-api-key-input")?.toString();
+
   if (isUsingAdvancedOptions) {
     CUSTOM_LLM_MODEL = formData.get("custom-model")?.toString();
-    LLM_BASE_URL = formData.get("base-url")?.toString();
     CONFIRMATION_MODE = keys.includes("confirmation-mode");
     if (CONFIRMATION_MODE) {
       // only set securityAnalyzer if confirmationMode is enabled
@@ -41,6 +43,7 @@ const extractAdvancedFormData = (formData: FormData) => {
   return {
     CUSTOM_LLM_MODEL,
     LLM_BASE_URL,
+    LLM_API_KEY,
     CONFIRMATION_MODE,
     SECURITY_ANALYZER,
     ENABLE_DEFAULT_CONDENSER,
@@ -77,17 +80,19 @@ export const extractSettings = (
     CONFIRMATION_MODE,
     SECURITY_ANALYZER,
     ENABLE_DEFAULT_CONDENSER,
+    LLM_API_KEY: CUSTOM_LLM_API_KEY,
   } = extractAdvancedFormData(formData);
+
+  const apiKeyToSend = CUSTOM_LLM_MODEL ? CUSTOM_LLM_API_KEY : LLM_API_KEY;
 
   return {
     LLM_MODEL: CUSTOM_LLM_MODEL || LLM_MODEL,
-    LLM_API_KEY_SET: !!LLM_API_KEY,
     AGENT,
     LANGUAGE,
     LLM_BASE_URL,
     CONFIRMATION_MODE,
     SECURITY_ANALYZER,
     ENABLE_DEFAULT_CONDENSER,
-    llm_api_key: LLM_API_KEY,
+    llm_api_key: apiKeyToSend,
   };
 };

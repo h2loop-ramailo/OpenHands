@@ -12,7 +12,6 @@ import { Settings } from "#/types/settings";
 import { BrandButton } from "#/components/features/settings/brand-button";
 import { KeyStatusIcon } from "#/components/features/settings/key-status-icon";
 import { SettingsInput } from "#/components/features/settings/settings-input";
-import { HelpLink } from "#/components/features/settings/help-link";
 import { useSaveSettings } from "#/hooks/mutation/use-save-settings";
 
 interface SettingsFormProps {
@@ -68,6 +67,16 @@ export function SettingsForm({ settings, models, onClose }: SettingsFormProps) {
 
   const isLLMKeySet = settings.LLM_API_KEY_SET;
 
+  const isCustomModel =
+    settings.LLM_MODEL === "hosted_vllm/Qwen/Qwen2.5-Coder-32B-Instruct-AWQ";
+
+  const baseUrl =
+    isCustomModel && !settings.LLM_BASE_URL
+      ? "https://h2loop--qwen25-coder-32b-serve.modal.run/v1"
+      : settings.LLM_BASE_URL || "";
+
+  const apiKey = isCustomModel ? "super-secret-key" : "";
+
   return (
     <div>
       <form
@@ -82,6 +91,16 @@ export function SettingsForm({ settings, models, onClose }: SettingsFormProps) {
             currentModel={settings.LLM_MODEL}
           />
 
+          {isCustomModel && (
+            <SettingsInput
+              name="base-url-input"
+              label="Base URL"
+              type="text"
+              className="w-full"
+              defaultValue={baseUrl}
+            />
+          )}
+
           <SettingsInput
             testId="llm-api-key-input"
             name="llm-api-key-input"
@@ -90,14 +109,15 @@ export function SettingsForm({ settings, models, onClose }: SettingsFormProps) {
             className="w-full"
             placeholder={isLLMKeySet ? "<hidden>" : ""}
             startContent={isLLMKeySet && <KeyStatusIcon isSet={isLLMKeySet} />}
+            defaultValue={apiKey}
           />
 
-          <HelpLink
+          {/* <HelpLink
             testId="llm-api-key-help-anchor"
             text={t(I18nKey.SETTINGS$DONT_KNOW_API_KEY)}
             linkText={t(I18nKey.SETTINGS$CLICK_FOR_INSTRUCTIONS)}
             href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
-          />
+          /> */}
         </div>
 
         <div className="flex flex-col gap-2">
