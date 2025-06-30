@@ -9,7 +9,7 @@ from openhands.cli.tui import (
 from openhands.events.event import Event
 from openhands.llm.metrics import Metrics
 
-_LOCAL_CONFIG_FILE_PATH = Path.home() / '.openhands' / 'config.toml'
+_LOCAL_CONFIG_FILE_PATH = Path.home() / '.h2loop' / 'config.toml'
 _DEFAULT_CONFIG: dict[str, dict[str, list[str]]] = {'sandbox': {'trusted_dirs': []}}
 
 

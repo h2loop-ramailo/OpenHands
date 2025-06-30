@@ -377,11 +377,7 @@ def display_help() -> None:
     print_formatted_text(HTML(commands_html))
 
     # Footer
-    print_formatted_text(
-        HTML(
-            '<grey>Learn more at: https://docs.all-hands.dev/usage/getting-started</grey>'
-        )
-    )
+    print_formatted_text(HTML('<grey>Learn more at: https://h2loop.ai</grey>'))
 
 
 def display_usage_metrics(usage_metrics: UsageMetrics) -> None:

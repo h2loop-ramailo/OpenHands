@@ -108,7 +108,7 @@ async def handle_init_command(
     config: OpenHandsConfig, event_stream: EventStream, current_dir: str
 ) -> tuple[bool, bool]:
     REPO_MD_CREATE_PROMPT = """
-        Please explore this repository. Create the file .openhands/microagents/repo.md with:
+        Please explore this repository. Create the file .h2loop/microagents/repo.md with:
             - A description of the project
             - An overview of the file structure
             - Any information on how to run tests or other relevant commands
@@ -208,7 +208,7 @@ async def handle_resume_command(
 
 
 async def init_repository(current_dir: str) -> bool:
-    repo_file_path = Path(current_dir) / '.openhands' / 'microagents' / 'repo.md'
+    repo_file_path = Path(current_dir) / '.h2loop' / 'microagents' / 'repo.md'
     init_repo = False
 
     if repo_file_path.exists():
@@ -266,7 +266,7 @@ async def init_repository(current_dir: str) -> bool:
 
 def check_folder_security_agreement(config: OpenHandsConfig, current_dir: str) -> bool:
     # Directories trusted by user for the CLI to use as workspace
-    # Config from ~/.openhands/config.toml overrides the app config
+    # Config from ~/.h2loop/config.toml overrides the app config
 
     app_config_trusted_dirs = config.sandbox.trusted_dirs
     local_config_trusted_dirs = get_local_config_trusted_dirs()
