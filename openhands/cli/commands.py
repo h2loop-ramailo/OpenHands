@@ -283,7 +283,7 @@ def check_folder_security_agreement(config: OpenHandsConfig, current_dir: str) -
                 text=(
                     f' Do you trust the files in this folder?\n\n'
                     f'   {current_dir}\n\n'
-                    ' OpenHands may read and execute files in this folder with your permission.'
+                    ' H2Loop may read and execute files in this folder with your permission.'
                 ),
                 style=COLOR_GREY,
                 read_only=True,

@@ -1,6 +1,6 @@
 import os
 
-__package_name__ = 'openhands_ai'
+__package_name__ = 'h2loop-ai'
 
 
 def get_version():
