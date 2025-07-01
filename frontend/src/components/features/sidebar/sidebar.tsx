@@ -13,6 +13,8 @@ import { ConversationPanelWrapper } from "../conversation-panel/conversation-pan
 import { useLogout } from "#/hooks/mutation/use-logout";
 import { useConfig } from "#/hooks/query/use-config";
 import { displayErrorToast } from "#/utils/custom-toast-handlers";
+import { useIsCreatingConversation } from "#/hooks/use-is-creating-conversation";
+import { useCreateConversation } from "#/hooks/mutation/use-create-conversation";
 
 export function Sidebar() {
   const location = useLocation();
@@ -30,6 +32,11 @@ export function Sidebar() {
 
   const [conversationPanelIsOpen, setConversationPanelIsOpen] =
     React.useState(false);
+
+  const { isPending, isSuccess } = useCreateConversation();
+  const isCreatingConversationElsewhere = useIsCreatingConversation();
+  const isCreatingConversation =
+    isPending || isSuccess || isCreatingConversationElsewhere;
 
   // TODO: Remove HIDE_LLM_SETTINGS check once released
   const shouldHideLlmSettings =
@@ -68,7 +75,11 @@ export function Sidebar() {
             <div className="flex items-center justify-center">
               <H2LoopLogoButton />
             </div>
-            <NewProjectButton disabled={settings?.EMAIL_VERIFIED === false} />
+            <NewProjectButton
+              disabled={
+                settings?.EMAIL_VERIFIED === false || isCreatingConversation
+              }
+            />
             <ConversationPanelButton
               isOpen={conversationPanelIsOpen}
               onClick={() =>
