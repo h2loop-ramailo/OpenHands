@@ -4,6 +4,7 @@ import { HomeHeader } from "#/components/features/home/home-header";
 import { RepoConnector } from "#/components/features/home/repo-connector";
 import { TaskSuggestions } from "#/components/features/home/tasks/task-suggestions";
 import { useUserProviders } from "#/hooks/use-user-providers";
+import { ToolsSection } from "#/components/features/home/tools/tool-section";
 
 <PrefetchPageLinks page="/conversations/:conversationId" />;
 
@@ -31,6 +32,7 @@ function HomeScreen() {
         <hr className="md:hidden border-[#717888]" />
         {providersAreSet && <TaskSuggestions filterFor={selectedRepoTitle} />}
       </main>
+      <ToolsSection />
     </div>
   );
 }
