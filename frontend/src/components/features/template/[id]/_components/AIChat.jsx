@@ -6,7 +6,7 @@ import { TextInput, ActionIcon, Menu } from "@mantine/core";
 import { IconCheck, IconSend, IconX, IconRefresh } from "@tabler/icons-react";
 import "./styles.css";
 // import { updateBlock } from "@/lib/api/blocks";
-import { useParams } from "next/navigation";
+import { useParams } from "react-router";
 import { toast } from "sonner";
 // import { ScrollArea } from "@/components/ui/scroll-area";
 import {

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import TemplateCard from "./_components/TemplateCard";
 import { useEffect, useState } from "react";
 import { createTemplate, getAllTemplates } from "@/lib/api/templates";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { NEW_TEMPLATE_DATA } from "@/constants/data/data";
 import CreateTemplateUsingFile from "./_components/CreateTemplateUsingFile";
@@ -13,7 +13,7 @@ const TemplatePage = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	async function getData() {
 		setLoading(true);
@@ -31,13 +31,13 @@ const TemplatePage = () => {
 			NEW_TEMPLATE_DATA.title,
 			NEW_TEMPLATE_DATA.description, NEW_TEMPLATE_DATA.content
 		);
-		
+
 		if (res.success && res.data) {
 			toast.success("Template created successfully");
 
 			if(res?.data && res?.data?.id){
 				setTimeout(() => {
-					router.push(`/template/${res?.data?.id}`);
+					navigate(`/template/${res?.data?.id}`);
 				}, 2000);
 			}
 

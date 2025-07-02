@@ -3,17 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { statusClasses, statusMessages } from "@/constants/styles/statusStyles";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router";
 
 const TemplateCard = ({ data }) => {
-	const router = useRouter();
+	const navigate = useNavigate();
 	const { id, name, status } = data;
 
 	const { primary, secondary } =
 		statusClasses[status] || statusClasses.PROCESSED;
 
 	const handleClick = () => {
-		router.push(`/template/${id}`);
+		navigate(`/template/${id}`);
 	};
 
 	return (
