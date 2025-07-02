@@ -15,11 +15,11 @@ import FileDetails from "@/components/static/file-details";
 import { toast } from "sonner";
 import { createTemplate, updateATemplateWithFile } from "@/lib/api/templates";
 import { NEW_TEMPLATE_DATA } from "@/constants/data/data";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router";
 
 const CreateTemplateUsingFile = () => {
 	const [file, setFile] = useState(null);
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	async function createTemplateFn() {
 		const res = await createTemplate(
@@ -67,7 +67,7 @@ const CreateTemplateUsingFile = () => {
 			);
 			if (updateResponse.success) {
 				toast.success("Template created successfully");
-				router.refresh();
+				window.location.reload();
 			}
 		}
 	}
