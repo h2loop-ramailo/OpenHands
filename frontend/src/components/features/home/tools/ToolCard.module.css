@@ -1,0 +1,61 @@
+.card {
+  background: #181b20;
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  padding: 2rem 1.5rem;
+  flex: 1 1 30%;
+  min-width: 260px;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+  z-index: 1;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  padding: 2px;
+  background: linear-gradient(90deg, #ffb6ec 0%, #b3a8f7 50%, #7fdcff 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+}
+.card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  transform: translateY(-4px) scale(1.03);
+  border-color: #3c3c4a;
+  cursor: pointer;
+}
+.image {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+  object-fit: contain;
+  filter: brightness(1.05) contrast(1.08);
+  z-index: 1;
+}
+.title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: #f8f8ff;
+  background: linear-gradient(90deg, #ffb6ec 0%, #b3a8f7 50%, #7fdcff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.description {
+  font-size: 0.98rem;
+  color: #c7d0e0;
+  text-align: center;
+  z-index: 1;
+}

@@ -1,0 +1,28 @@
+.section {
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+.heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: left;
+  color: #fff;
+}
+.categoryRow {
+  margin-bottom: 2.5rem;
+}
+.categoryTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-editor-base);
+}
+.cardsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
