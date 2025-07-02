@@ -1,0 +1,205 @@
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+// import jwt from "jsonwebtoken";
+import { links } from "../constants/data";
+
+export function cn(...inputs) {
+  return twMerge(clsx(inputs));
+}
+
+export function trimEmail(email) {
+  if (typeof email !== "string") return null;
+
+  const maxLength = 20;
+  const trimmedEmail = email.trim().toLowerCase();
+
+  return trimmedEmail.length > maxLength
+    ? trimmedEmail.slice(0, maxLength - 3) + "..."
+    : trimmedEmail;
+}
+
+export function trimName(name) {
+  if (typeof name !== "string") return null;
+
+  const maxLength = 40;
+  const trimmedName = name.trim();
+
+  return trimmedName.length > maxLength
+    ? trimmedName.slice(0, maxLength - 3) + "..."
+    : trimmedName;
+}
+
+export function checkGithubRepositoryURl(url) {
+  const githubUrlRegex = /https:\/\/github.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/;
+  return githubUrlRegex.test(url);
+}
+
+// export function isTokenExpired(token) {
+//   try {
+//     const decodedToken = jwt.decode(token);
+//     return decodedToken.exp * 1000 < Date.now();
+//   } catch (error) {
+//     // console.error("Failed to decode token:", error);
+//     return true;
+//   }
+// }
+
+export function getAccordionDefaultValues(codebases, documents) {
+  let value = [];
+
+  if (codebases.length > 0) value.push("codebases");
+  if (documents.length > 0) value.push("documents");
+
+  return value;
+}
+
+export function updateMermaidBlocks(parsedContent) {
+  return parsedContent.map((block) => {
+    if (block.children && block.children.length > 0) {
+      block.children = updateMermaidBlocks(block.children);
+    }
+
+    if (block.type === "codeBlock") {
+      let isMermaid = false;
+      if (
+        block.props &&
+        block.props.language &&
+        block.props.language.toLowerCase() === "mermaid"
+      ) {
+        isMermaid = true;
+      } else {
+        let codeText = "";
+        if (Array.isArray(block.content)) {
+          block.content.forEach((item) => {
+            if (item.type === "text" && typeof item.text === "string") {
+              codeText += item.text;
+            }
+          });
+        }
+        if (codeText.toLowerCase().includes("mermaid")) {
+          isMermaid = true;
+        }
+      }
+
+      if (isMermaid) {
+        let codeText = "";
+        if (Array.isArray(block.content)) {
+          block.content.forEach((item) => {
+            if (item.type === "text" && typeof item.text === "string") {
+              codeText += item.text;
+            }
+          });
+        }
+
+        block.type = "mermaid";
+        block.props = {
+          textColor: "default",
+          textAlignment: "left",
+          displayType: "text",
+        };
+        block.content = [
+          {
+            type: "mermaidcontent",
+            props: {
+              code: codeText,
+            },
+          },
+        ];
+        block.children = [];
+      }
+    }
+    return block;
+  });
+}
+
+export function convertMermaidToCodeBlock(parsedContent) {
+  return parsedContent.map((block) => {
+    // Process children recursively if they exist
+    if (block.children && block.children.length > 0) {
+      block.children = convertMermaidToCodeBlock(block.children);
+    }
+
+    // Check if the block is a mermaid block
+    if (block.type === "mermaid") {
+      let codeText = "";
+
+      // Extract code from the mermaid content
+      if (Array.isArray(block.content)) {
+        block.content.forEach((item) => {
+          if (
+            item.type === "mermaidcontent" &&
+            item.props &&
+            typeof item.props.code === "string"
+          ) {
+            codeText += item.props.code || " ";
+          }
+        });
+      }
+
+      if (codeText.trim() === "") {
+        codeText = " ";
+      }
+
+      block.type = "codeBlock";
+      block.props = {
+        language: "mermaid",
+        textColor: block.props.textColor || "default",
+        backgroundColor: block.props.backgroundColor || "default",
+        textAlignment: block.props.textAlignment || "left",
+      };
+
+      block.content = [
+        {
+          type: "text",
+          text: codeText,
+          styles: {},
+        },
+      ];
+
+      block.children = [];
+    }
+
+    return block;
+  });
+}
+
+export function getLastProcessedVersion(repo) {
+  const processedVersions =
+    repo?.versions?.filter((v) => v.status === "PROCESSED") || [];
+  return processedVersions.length ? processedVersions.at(-1) : null;
+}
+
+export function getTabs(repoLength = 0) {
+  const DISABLE_AUTO_GEN_FLOW =
+    process.env.NEXT_PUBLIC_DISABLE_AUTO_GEN_FLOW === "true";
+
+  if (DISABLE_AUTO_GEN_FLOW || repoLength !== 1) {
+    return [];
+  } else {
+    return ["DATA_SOURCES", "DOCUMENTATION"];
+  }
+}
+
+export async function getTheMarkdownContentForEditor(blocksJSON, hiddenEditor) {
+  hiddenEditor.replaceBlocks(hiddenEditor.document, blocksJSON);
+
+  const _hiddenEditorBlocks = hiddenEditor.document;
+  const updatedBlocks = convertMermaidToCodeBlock(_hiddenEditorBlocks);
+
+  const documentMarkdown =
+    await hiddenEditor.blocksToMarkdownLossy(updatedBlocks);
+
+  return documentMarkdown;
+}
+
+export const formatStatusText = (status) =>
+  status.charAt(0).toUpperCase() + status.slice(1);
+
+export function getTheCurrentSidebarItem(pathname) {
+  return links.find((link) => {
+    if (pathname.startsWith("/document/")) {
+      return link.href === "/documents";
+    }
+    return pathname === link.href || pathname.startsWith(`${link.href}/`);
+  });
+}

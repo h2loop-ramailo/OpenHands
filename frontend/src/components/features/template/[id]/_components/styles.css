@@ -1,0 +1,13 @@
+.ai-chat {
+	display: flex;
+	width: 100%;
+}
+
+.ai-chat-message {
+	flex: 1;
+}
+
+.ai-chat-input {
+	width: 100%;
+	margin-bottom: 10px;
+}
