@@ -17,7 +17,7 @@ import { RiChatSmile2Fill } from "react-icons/ri";
 import { AIChat } from "./AIChat";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-// import { updateATemplate } from "@/lib/api/templates";
+import { updateATemplate } from "../../../../../api/templates";
 import CreateDocumentButton from "./create-document-button";
 import styles from "./TemplateEditor.module.css";
 
@@ -50,7 +50,7 @@ const TemplateEditor = ({ data, templateId }) => {
 	const insertAIChat = (editor) => ({
 		title: "AI Chat",
 		onItemClick: async () => {
-			// await saveBlocksToBackend();
+			await saveBlocksToBackend();
 
 			insertOrUpdateBlock(editor, {
 				type: "aiChat",
@@ -129,7 +129,7 @@ const TemplateEditor = ({ data, templateId }) => {
 					`lastUpdatedAtLocalstorage-template-${templateId}`
 				) > localStorage.getItem(`lastUpdatedAtBE-template-${templateId}`)
 			) {
-				// await saveBlocksToBackend();
+				await saveBlocksToBackend();
 			}
 		}, 5000);
 
@@ -223,7 +223,7 @@ const TemplateEditor = ({ data, templateId }) => {
 					<BlockNoteView
 						editor={editor}
 						slashMenu={false}
-						theme='light'
+						theme='dark'
 						onChange={handleEditorChange}
 					>
 						<SuggestionMenuController

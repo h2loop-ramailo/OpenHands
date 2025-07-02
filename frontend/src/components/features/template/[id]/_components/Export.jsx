@@ -56,7 +56,7 @@ const ExportDocumentContent = ({ editor, hiddenEditor, title }) => {
         g.classGroup rect {
           fill: #282a36;
           stroke: #6272a4;
-        } 
+        }
         g.classGroup text {
           fill: #f8f8f2;
         }
@@ -91,7 +91,7 @@ const ExportDocumentContent = ({ editor, hiddenEditor, title }) => {
           fill: #00bcd4;
           stroke: #00bcd4;
           stroke-width: 1;
-        } 
+        }
         #extensionStart, #extensionEnd {
           fill: #f8f8f2;
           stroke: #f8f8f2;
@@ -245,7 +245,7 @@ const ExportDocumentContent = ({ editor, hiddenEditor, title }) => {
 								printWindow.document.querySelectorAll(".mermaid")
 							);
 							console.log("Mermaid initialized in print window");
-							
+
 							// Wait for rendering to complete before printing
 							setTimeout(() => {
 								// Remove notification before printing

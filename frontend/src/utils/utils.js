@@ -171,7 +171,7 @@ export function getLastProcessedVersion(repo) {
 
 export function getTabs(repoLength = 0) {
   const DISABLE_AUTO_GEN_FLOW =
-    process.env.NEXT_PUBLIC_DISABLE_AUTO_GEN_FLOW === "true";
+    import.meta.env.NEXT_PUBLIC_DISABLE_AUTO_GEN_FLOW === "true";
 
   if (DISABLE_AUTO_GEN_FLOW || repoLength !== 1) {
     return [];

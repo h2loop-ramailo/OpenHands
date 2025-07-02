@@ -14,7 +14,7 @@ export function ToolCard({ title, image, description }: ToolCardProps) {
     <div
       className={styles.card}
       onClick={() => {
-        navigate("/templates/1");
+        navigate("/templates/8");
       }}
     >
       <img src={image} alt={title} className={styles.image} />
