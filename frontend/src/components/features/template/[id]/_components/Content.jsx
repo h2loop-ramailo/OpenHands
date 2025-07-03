@@ -300,7 +300,7 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 						editor={editor}
 						slashMenu={false}
 						className='mt-4'
-						theme='light'
+						theme='dark'
 						onChange={handleEditorChange}
 					>
 						<SuggestionMenuController
