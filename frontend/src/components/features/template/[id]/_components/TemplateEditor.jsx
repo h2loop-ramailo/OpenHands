@@ -18,15 +18,17 @@ import { AIChat } from "./AIChat";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { updateATemplate } from "../../../../../api/templates";
+import {TemplateIdContext} from "../../use-template-id";
 import CreateDocumentButton from "./create-document-button";
 import styles from "./TemplateEditor.module.css";
 
-const schema = BlockNoteSchema.create({
-	blockSpecs: {
-		...defaultBlockSpecs,
+	const schema = BlockNoteSchema.create({
+		blockSpecs: {
+			...defaultBlockSpecs,
 		aiChat: AIChat,
-	},
-});
+		},
+	});
+
 
 const TemplateEditor = ({ data, templateId }) => {
 	const editor = useCreateBlockNote({
@@ -179,6 +181,7 @@ const TemplateEditor = ({ data, templateId }) => {
 	}
 
 	return (
+		<TemplateIdContext.Provider value={templateId}>
 		<div className='flex flex-col h-full bg-base text-content rounded-2xl p-4 md:p-8 shadow-lg'>
 			<div className='container mx-auto mb-3 flex items-center justify-between'>
 				{isEditingTitle ? (
@@ -242,7 +245,8 @@ const TemplateEditor = ({ data, templateId }) => {
 				</div>
 			</div>
 		</div>
+		</TemplateIdContext.Provider>
 	);
-};
+}
 
 export default TemplateEditor;

@@ -1,8 +1,8 @@
 // "use server";
-import { routes } from "@/constants/apiRoutes";
-import { isAuthenticated } from "../isAuth";
+import { routes } from "../constants/apiRoutes";
+import { isAuthenticated } from "../utils/isAuth";
 import axios from "axios";
-import { handleError } from "../handleError";
+import { handleError } from "../utils/handleError";
 
 export const updateBlock = async (docId, blockId, prompt) => {
   try {
