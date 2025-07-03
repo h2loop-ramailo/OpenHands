@@ -1,11 +1,11 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../../../ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "../../../../ui/tooltip";
 import { IconRefresh } from "@tabler/icons-react";
 import { CircleAlert, FileScan } from "lucide-react";
 
@@ -17,9 +17,9 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "../../../../ui/select";
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "../../../../../utils/utils";
 
 const SingleCodebase = ({ codebase, handleSync }) => {
   const [selectedVersion, setSelectedVersion] = useState(

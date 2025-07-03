@@ -5,9 +5,9 @@ import { createReactBlockSpec } from "@blocknote/react";
 import { TextInput, ActionIcon, Menu } from "@mantine/core";
 import { IconCheck, IconSend, IconX, IconRefresh } from "@tabler/icons-react";
 import "./styles.css";
-// import { updateBlock } from "@/lib/api/blocks";
-import { useParams } from "react-router";
+import { updateBlock } from "../../../../../api/blocks";
 import { toast } from "sonner";
+import { useTemplateId} from "../../use-template-id";
 // import { ScrollArea } from "@/components/ui/scroll-area";
 import {
 	DropdownMenu,
@@ -44,7 +44,8 @@ export const AIChat = createReactBlockSpec(
 			const [inputValue, setInputValue] = useState("");
 			const [isLoading, setIsLoading] = useState(false);
 			const inputRef = useRef(null);
-			const params = useParams();
+
+			const templateId = useTemplateId();
 
 			useEffect(() => {
 				const timer = setTimeout(() => {
@@ -58,7 +59,7 @@ export const AIChat = createReactBlockSpec(
 			const generateContent = async (promptValue) => {
 				try {
 					const response = await updateBlock(
-						params.docId,
+						templateId,
 						block.id,
 						promptValue
 					);
@@ -95,29 +96,29 @@ export const AIChat = createReactBlockSpec(
 						state: "generating",
 					},
 				});
-				// const result = await generateContent(inputValue);
-				// if (result.error) {
-				// 	editor.updateBlock(block, {
-				// 		props: {
-				// 			...block.props,
-				// 			state: "prompting",
-				// 			prompt: inputValue,
-				// 			generatedContent: "",
-				// 			sources: [],
-				// 		},
-				// 	});
-				// } else {
-				// 	editor.updateBlock(block, {
-				// 		props: {
-				// 			...block.props,
-				// 			state: "generated",
-				// 			prompt: inputValue,
-				// 			generatedContent: result.generated,
-				// 			sources: result.sources,
-				// 		},
-				// 		children: result.markdownBlocks,
-				// 	});
-				// }
+				const result = await generateContent(inputValue);
+				if (result.error) {
+					editor.updateBlock(block, {
+						props: {
+							...block.props,
+							state: "prompting",
+							prompt: inputValue,
+							generatedContent: "",
+							sources: [],
+						},
+					});
+				} else {
+					editor.updateBlock(block, {
+						props: {
+							...block.props,
+							state: "generated",
+							prompt: inputValue,
+							generatedContent: result.generated,
+							sources: result.sources,
+						},
+						children: result.markdownBlocks,
+					});
+				}
 
 				setIsLoading(false);
 			};
@@ -154,29 +155,29 @@ export const AIChat = createReactBlockSpec(
 				editor.removeBlocks(block.children);
 
 				setIsLoading(true);
-				// const result = await generateContent(inputValue);
-				// if (result.error) {
-				// 	editor.updateBlock(block, {
-				// 		props: {
-				// 			...block.props,
-				// 			state: "prompting",
-				// 			prompt: inputValue,
-				// 			generatedContent: "",
-				// 			sources: [],
-				// 		},
-				// 	});
-				// } else {
-				// 	editor.updateBlock(block, {
-				// 		props: {
-				// 			...block.props,
-				// 			state: "generated",
-				// 			prompt: inputValue,
-				// 			generatedContent: result.generated,
-				// 			sources: result.sources,
-				// 		},
-				// 		children: result.markdownBlocks,
-				// 	});
-				// }
+				const result = await generateContent(inputValue);
+				if (result.error) {
+					editor.updateBlock(block, {
+						props: {
+							...block.props,
+							state: "prompting",
+							prompt: inputValue,
+							generatedContent: "",
+							sources: [],
+						},
+					});
+				} else {
+					editor.updateBlock(block, {
+						props: {
+							...block.props,
+							state: "generated",
+							prompt: inputValue,
+							generatedContent: result.generated,
+							sources: result.sources,
+						},
+						children: result.markdownBlocks,
+					});
+				}
 				setIsLoading(false);
 			};
 
@@ -300,13 +301,13 @@ const SourcesPanel = ({ data = [] }) => {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent className='min-w-72 max-w-full'>
-							{/* <ScrollArea className='h-72 w-full'>
+							<ScrollArea className='h-72 w-full'>
 								{data.map((item, idx) => (
 									<DropdownMenuItem key={`${item}-${idx}`}>
 										{item}
 									</DropdownMenuItem>
 								))}
-							</ScrollArea> */}
+							</ScrollArea>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				)}

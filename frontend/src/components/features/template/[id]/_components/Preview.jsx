@@ -4,13 +4,13 @@ import {
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
-} from "@/components/ui/accordion";
-import { cn, getAccordionDefaultValues } from "@/lib/utils";
+} from "../../../../ui/accordion";
+import { cn, getAccordionDefaultValues } from "../../../../../utils/utils";
 import SingleCodebase from "./SingleCodebase";
 import { toast } from "sonner";
-import { syncCodebase } from "@/lib/api/data-sources";
+import { syncCodebase } from "../../../../../api/data-sources";
 import SingleDocument from "./SingleDocument";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea } from "../../../../ui/scroll-area";
 
 const Preview = ({ dataSources, editor }) => {
 	// Filter data sources into codebases and documents

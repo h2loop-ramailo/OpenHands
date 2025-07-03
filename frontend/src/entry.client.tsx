@@ -47,7 +47,7 @@ function PosthogInit() {
 
 async function prepareApp() {
   if (
-    process.env.NODE_ENV === "development" &&
+    import.meta.env.NODE_ENV === "development" &&
     import.meta.env.VITE_MOCK_API === "true"
   ) {
     const { worker } = await import("./mocks/browser");
@@ -66,7 +66,7 @@ prepareApp().then(() =>
         <Provider store={store}>
           <QueryClientProvider client={queryClient}>
             <HydratedRouter />
-            <PosthogInit />
+            {/* <PosthogInit /> */}
           </QueryClientProvider>
         </Provider>
       </StrictMode>,

@@ -22,7 +22,7 @@ import {
 	createDocument,
 	getASingleDocument,
 	updateDocument,
-} from "@/lib/api/documents";
+} from "../../../../../api/documents";
 import { toast } from "sonner";
 import { MermaidInlineContent } from "./MermaidBlock";
 import ExportDocumentContent from "./Export";
@@ -30,7 +30,7 @@ import {
 	convertMermaidToCodeBlock,
 	getTheMarkdownContentForEditor,
 	updateMermaidBlocks,
-} from "@/lib/utils";
+} from "../../../../../utils/utils";
 
 const schema = BlockNoteSchema.create({
 	blockSpecs: {
@@ -137,6 +137,7 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 					"Editor instance is not available"
 				);
 				toast.error("Something went wrong while saving document");
+				return false;
 			}
 
 			// 1. Get the content from the mainEditor and set it to hiddenEditor
@@ -264,12 +265,12 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 	}
 
 	return (
-		<div className='flex flex-col h-[90vh]'>
-			<div className='container flex items-center justify-between mb-3'>
+		<div className='flex flex-col h-full bg-base text-content rounded-2xl p-4 md:p-8 shadow-lg'>
+			<div className='container mx-auto mb-3 flex items-center justify-between'>
 				{isEditingTitle ? (
 					<input
 						autoFocus
-						className='text-2xl font-bold bg-transparent border-b focus:outline-none min-w-[50%]'
+						className={`text-2xl font-bold bg-neutral-900 border border-neutral-700 focus:bg-neutral-800 focus:border-purple-600 focus:ring-0 focus:ring-purple-200 focus:outline-none transition-all duration-200 rounded px-2 py-1 min-w-[50%] text-content`}
 						placeholder={title}
 						value={title}
 						onChange={handleTitleChange}
@@ -293,13 +294,13 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 					title={title}
 				/>
 			</div>
-			<div className='border rounded-lg h-full'>
-				<div className='max-h-[80vh] overflow-y-auto'>
+			<div className='border border-purple-900 rounded-lg h-full'>
+				<div className='min-h-[60vh] max-h-[70vh] overflow-y-auto flex-1 bg-base-secondary p-4 mt-4'>
 					<BlockNoteView
 						editor={editor}
 						slashMenu={false}
 						className='mt-4'
-						theme='light'
+						theme='dark'
 						onChange={handleEditorChange}
 					>
 						<SuggestionMenuController

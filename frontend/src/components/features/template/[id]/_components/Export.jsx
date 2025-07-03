@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "../../../../ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -8,8 +8,8 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { getTheMarkdownContentForEditor } from "@/lib/utils";
+} from "../../../../ui/dropdown-menu";
+import { getTheMarkdownContentForEditor } from "../../../../../utils/utils";
 import { toast } from "sonner";
 
 const ExportDocumentContent = ({ editor, hiddenEditor, title }) => {
@@ -56,7 +56,7 @@ const ExportDocumentContent = ({ editor, hiddenEditor, title }) => {
         g.classGroup rect {
           fill: #282a36;
           stroke: #6272a4;
-        } 
+        }
         g.classGroup text {
           fill: #f8f8f2;
         }
@@ -91,7 +91,7 @@ const ExportDocumentContent = ({ editor, hiddenEditor, title }) => {
           fill: #00bcd4;
           stroke: #00bcd4;
           stroke-width: 1;
-        } 
+        }
         #extensionStart, #extensionEnd {
           fill: #f8f8f2;
           stroke: #f8f8f2;
@@ -245,7 +245,7 @@ const ExportDocumentContent = ({ editor, hiddenEditor, title }) => {
 								printWindow.document.querySelectorAll(".mermaid")
 							);
 							console.log("Mermaid initialized in print window");
-							
+
 							// Wait for rendering to complete before printing
 							setTimeout(() => {
 								// Remove notification before printing
@@ -288,16 +288,29 @@ const ExportDocumentContent = ({ editor, hiddenEditor, title }) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button>Export</Button>
+				<Button variant='outline'>Export</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent>
-				<DropdownMenuLabel>Export as</DropdownMenuLabel>
-				<DropdownMenuSeparator />
-				<DropdownMenuItem onClick={handleMarkdownExport}>
+			<DropdownMenuContent className='bg-neutral-900 text-neutral-100 rounded-md shadow-lg border border-neutral-700 p-1 min-w-[160px]'>
+				<DropdownMenuLabel className='text-neutral-300'>Export as</DropdownMenuLabel>
+				<DropdownMenuSeparator className='bg-neutral-700' />
+				<DropdownMenuItem
+					onClick={handleMarkdownExport}
+					className='hover:bg-neutral-800 focus:bg-neutral-800 rounded text-neutral-100 cursor-pointer transition-colors duration-100'
+				>
 					Markdown
 				</DropdownMenuItem>
-				<DropdownMenuItem onClick={handleHTMLExport}>HTML</DropdownMenuItem>
-				<DropdownMenuItem onClick={handlePDFExport}>PDF</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={handleHTMLExport}
+					className='hover:bg-neutral-800 focus:bg-neutral-800 rounded text-neutral-100 cursor-pointer transition-colors duration-100'
+				>
+					HTML
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={handlePDFExport}
+					className='hover:bg-neutral-800 focus:bg-neutral-800 rounded text-neutral-100 cursor-pointer transition-colors duration-100'
+				>
+					PDF
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
