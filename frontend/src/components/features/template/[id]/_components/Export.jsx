@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "../../../../ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -8,8 +8,8 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { getTheMarkdownContentForEditor } from "@/lib/utils";
+} from "../../../../ui/dropdown-menu";
+import { getTheMarkdownContentForEditor } from "../../../../../utils/utils";
 import { toast } from "sonner";
 
 const ExportDocumentContent = ({ editor, hiddenEditor, title }) => {

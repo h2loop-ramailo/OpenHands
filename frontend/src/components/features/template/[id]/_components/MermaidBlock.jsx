@@ -1,10 +1,8 @@
-"use client";
-
+import { useEffect, useState } from "react";
 import { createReactBlockSpec } from "@blocknote/react";
 import { defaultProps } from "@blocknote/core";
-import Mermaid from "@/components/Mermaid";
+import Mermaid from "../../../../shared/Mermaid";
 import { createReactInlineContentSpec } from "@blocknote/react";
-import { useEffect, useState } from "react";
 
 // The Mermaid inline content.
 export const MermaidInlineContent = createReactInlineContentSpec(
