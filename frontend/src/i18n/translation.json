@@ -7231,6 +7231,22 @@
     "de": "Einstellungen",
     "uk": "Налаштування"
   },
+  "SIDEBAR$DOCUMENTS": {
+    "en": "Documents",
+    "ja": "ドキュメント",
+    "zh-CN": "文档",
+    "zh-TW": "文件",
+    "ko-KR": "문서",
+    "no": "Dokumenter",
+    "it": "Documenti",
+    "pt": "Documentos",
+    "es": "Documentos",
+    "ar": "مستندات",
+    "fr": "Documents",
+    "tr": "Belgeler",
+    "de": "Dokumente",
+    "uk": "Документи"
+  },
   "SIDEBAR$DOCS": {
     "en": "Documentation",
     "ja": "ドキュメント",

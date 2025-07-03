@@ -15,6 +15,10 @@ import { useConfig } from "#/hooks/query/use-config";
 import { displayErrorToast } from "#/utils/custom-toast-handlers";
 import { useIsCreatingConversation } from "#/hooks/use-is-creating-conversation";
 import { useCreateConversation } from "#/hooks/mutation/use-create-conversation";
+import { TooltipButton } from "#/components/shared/buttons/tooltip-button";
+import { I18nKey } from "#/i18n/declaration";
+import { t } from "i18next";
+import { IoDocumentTextSharp } from "react-icons/io5";
 
 export function Sidebar() {
   const location = useLocation();
@@ -89,6 +93,17 @@ export function Sidebar() {
               }
               disabled={settings?.EMAIL_VERIFIED === false}
             />
+            <TooltipButton
+              tooltip={t(I18nKey.SIDEBAR$DOCUMENTS)}
+              ariaLabel={t(I18nKey.SIDEBAR$DOCUMENTS)}
+              navLinkTo="/documents"
+              disabled={settings?.EMAIL_VERIFIED === false}
+            >
+              <IoDocumentTextSharp
+                size={24}
+                className={`text-[#9099AC] ${settings?.EMAIL_VERIFIED === false ? "opacity-50" : ""}`}
+              />
+            </TooltipButton>
           </div>
 
           <div className="flex flex-row md:flex-col md:items-center gap-[26px] md:mb-4">
