@@ -4,12 +4,11 @@ import { useEffect, useState } from "react";
 import { getASingleDocument } from "../../../../../api/documents";
 import { getAllDataSourcesByWorkspaceId } from "../../../../../api/data-sources";
 import Content from "./Content";
-// import {useParams} from "react-router";
+import {useParams} from "react-router";
 
 
 const TemplateEditor = () => {
-//   const { docId } = useParams();
-  const docId = 127;
+  const { documentId } = useParams();
   const [data, setData] = useState({
     workspaceId: "",
     templateId: "",
@@ -20,9 +19,9 @@ const TemplateEditor = () => {
   const [editor, setEditor] = useState(null);
 
   const fetchData = async () => {
-    if (docId) {
+    if (documentId) {
       setLoading(true);
-      const { success, data, errorMessage } = await getASingleDocument(docId);
+      const { success, data, errorMessage } = await getASingleDocument(documentId);
       if (!success) setError(errorMessage || "An error occurred");
       else {
         setData({
@@ -62,7 +61,7 @@ const TemplateEditor = () => {
         <div className="col-span-4 h-full">
           <Content
             workspacId={data.workspaceId}
-            docId={docId}
+            docId={documentId}
             templateId={data.templateId}
             onEditorReady={setEditor}
           />

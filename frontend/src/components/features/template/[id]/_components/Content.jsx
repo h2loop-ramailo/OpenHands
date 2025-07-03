@@ -154,10 +154,6 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 				hiddenEditor
 			);
 
-			console.log(documentMarkdown);
-
-			console.log(templateId, workspacId, docId);
-
 			const { success, errorMessage } = await updateDocument({
 				name: title,
 				content: documentMarkdown,

@@ -288,16 +288,29 @@ const ExportDocumentContent = ({ editor, hiddenEditor, title }) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button>Export</Button>
+				<Button variant='outline'>Export</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent>
-				<DropdownMenuLabel>Export as</DropdownMenuLabel>
-				<DropdownMenuSeparator />
-				<DropdownMenuItem onClick={handleMarkdownExport}>
+			<DropdownMenuContent className='bg-neutral-900 text-neutral-100 rounded-md shadow-lg border border-neutral-700 p-1 min-w-[160px]'>
+				<DropdownMenuLabel className='text-neutral-300'>Export as</DropdownMenuLabel>
+				<DropdownMenuSeparator className='bg-neutral-700' />
+				<DropdownMenuItem
+					onClick={handleMarkdownExport}
+					className='hover:bg-neutral-800 focus:bg-neutral-800 rounded text-neutral-100 cursor-pointer transition-colors duration-100'
+				>
 					Markdown
 				</DropdownMenuItem>
-				<DropdownMenuItem onClick={handleHTMLExport}>HTML</DropdownMenuItem>
-				<DropdownMenuItem onClick={handlePDFExport}>PDF</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={handleHTMLExport}
+					className='hover:bg-neutral-800 focus:bg-neutral-800 rounded text-neutral-100 cursor-pointer transition-colors duration-100'
+				>
+					HTML
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={handlePDFExport}
+					className='hover:bg-neutral-800 focus:bg-neutral-800 rounded text-neutral-100 cursor-pointer transition-colors duration-100'
+				>
+					PDF
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

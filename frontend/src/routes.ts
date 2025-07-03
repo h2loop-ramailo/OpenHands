@@ -29,6 +29,6 @@ export default [
     ]),
 
     route("documents/", "routes/documents-page.tsx"),
-    route("document/:documentId", "routes/template-page.tsx"),
+    route("document/:documentId", "routes/document-detail-page.tsx"),
   ]),
 ] satisfies RouteConfig;

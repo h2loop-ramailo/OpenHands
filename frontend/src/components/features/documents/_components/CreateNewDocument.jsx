@@ -76,7 +76,7 @@ const CreateNewDocument = () => {
 	return (
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 			<DialogTrigger asChild>
-				<Button variant='default'>Create New Document</Button>
+				<Button variant='outline'>Create New Document</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:min-w-[1080px] px-3 py-5 space-y-0'>
 				<DialogHeader>
