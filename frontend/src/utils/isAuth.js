@@ -42,8 +42,11 @@ export const isAuthenticated = async () => {
   //     };
   // }
 
+  const TEST_AUTH_TOKEN =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijp7InVzZXJfaWQiOiI4In0sInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE3NTI3NTYwNTQsImlhdCI6MTc1MTQ2MDA1NCwianRpIjoiYjNlNjU2MTktNjJjYy00NDJiLTlhYzAtNjk2M2I2ZDI5NWE3In0.RtbiVpCw9WXONfIYzInQvk8hh0GP4U5hV1KBo5TK_EY";
+
   return {
     authenticated: true,
-    token: import.meta.env.VITE_AUTH_TOKEN,
+    token: TEST_AUTH_TOKEN,
   };
 };

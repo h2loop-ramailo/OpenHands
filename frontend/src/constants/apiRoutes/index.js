@@ -1,9 +1,9 @@
-const API_URL = `${import.meta.env.VITE_H2LOOP_API_BASE_URL}/api/v1`;
+VITE_H2LOOP_API_BASE_URL = "https://coreapi.h2loop.ai";
 
-console.log("STARTING_WITH: ", import.meta.env);
+const API_URL = `${VITE_H2LOOP_API_BASE_URL}/api/v1`;
 
 export const routes = {
-  baseURL: import.meta.env.VITE_H2LOOP_API_BASE_URL,
+  baseURL: VITE_H2LOOP_API_BASE_URL,
   status: `${API_URL}/status`,
 
   login: `${API_URL}/auth/login`,
