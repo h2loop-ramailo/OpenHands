@@ -56,7 +56,7 @@ const CreateNewDocument = () => {
 			template_id: null,
 		});
 		if (success) {
-			router.push(`document/${data.id}`);
+			navigate(`/document/${data.id}`);
 		} else {
 			toast.error(
 				errorMessage || "An error occured while creating the document"
