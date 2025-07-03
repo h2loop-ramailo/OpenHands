@@ -27,6 +27,8 @@ export default [
       route("terminal", "routes/terminal-tab.tsx"),
       route("vscode", "routes/vscode-tab.tsx"),
     ]),
-    route("templates/:templateId", "routes/template-page.tsx"),
+
+    route("documents/", "routes/documents-page.tsx"),
+    route("document/:documentId", "routes/template-page.tsx"),
   ]),
 ] satisfies RouteConfig;
