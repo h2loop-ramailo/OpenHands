@@ -75,6 +75,12 @@ async def handle_commands(
         close_repl, new_session_requested = await handle_resume_command(event_stream)
     elif command == '/tools':
         await handle_tools_command()
+    elif command.startswith('/'):
+        print_formatted_text(
+            HTML(
+                '<ansired>Command not found. Type <b>/help</b> for a list of commands.</ansired>'
+            )
+        )
     else:
         close_repl = True
         action = MessageAction(content=command)
