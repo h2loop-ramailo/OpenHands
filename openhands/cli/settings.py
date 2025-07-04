@@ -271,43 +271,46 @@ async def modify_llm_settings_basic(
         print_formatted_text(
             HTML(f'\n<grey>Default model: </grey><green>{default_model}</green>')
         )
-        change_model = (
-            cli_confirm(
-                'Do you want to use a different model?',
-                [f'Use {default_model}', 'Select another model'],
-            )
-            == 1
-        )
-
-        if change_model:
-            model_completer = FuzzyWordCompleter(provider_models)
-
-            # Define a validator function that allows custom models but shows a warning
-            def model_validator(x):
-                # Allow any non-empty model name
-                if not x.strip():
-                    return False
-
-                # Show a warning for models not in the predefined list, but still allow them
-                if x not in provider_models:
-                    print_formatted_text(
-                        HTML(
-                            f'<yellow>Warning: {x} is not in the predefined list for provider {provider}. '
-                            f'Make sure this model name is correct.</yellow>'
-                        )
-                    )
-                return True
-
-            model = await get_validated_input(
-                session,
-                '(Step 2/3) Select LLM Model (TAB for options, CTRL-c to cancel): ',
-                completer=model_completer,
-                validator=model_validator,
-                error_message='Model name cannot be empty',
-            )
-        else:
-            # Use the default model
+        if len(provider_models) == 1:
             model = default_model
+        else:
+            change_model = (
+                cli_confirm(
+                    'Do you want to use a different model?',
+                    [f'Use {default_model}', 'Select another model'],
+                )
+                == 1
+            )
+
+            if change_model:
+                model_completer = FuzzyWordCompleter(provider_models)
+
+                # Define a validator function that allows custom models but shows a warning
+                def model_validator(x):
+                    # Allow any non-empty model name
+                    if not x.strip():
+                        return False
+
+                    # Show a warning for models not in the predefined list, but still allow them
+                    if x not in provider_models:
+                        print_formatted_text(
+                            HTML(
+                                f'<yellow>Warning: {x} is not in the predefined list for provider {provider}. '
+                                f'Make sure this model name is correct.</yellow>'
+                            )
+                        )
+                    return True
+
+                model = await get_validated_input(
+                    session,
+                    '(Step 2/3) Select LLM Model (TAB for options, CTRL-c to cancel): ',
+                    completer=model_completer,
+                    validator=model_validator,
+                    error_message='Model name cannot be empty',
+                )
+            else:
+                # Use the default model
+                model = default_model
 
         # For custom provider, use default base_url and api_key unless changed
         if provider == DEFAULT_CUSTOM_PROVIDER:
