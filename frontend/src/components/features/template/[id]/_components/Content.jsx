@@ -31,6 +31,7 @@ import {
 	getTheMarkdownContentForEditor,
 	updateMermaidBlocks,
 } from "../../../../../utils/utils";
+import {DocumentIdContext} from "../../use-document-id";
 
 const schema = BlockNoteSchema.create({
 	blockSpecs: {
@@ -265,6 +266,7 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 	}
 
 	return (
+		<DocumentIdContext.Provider value={docId}>
 		<div className='flex flex-col h-full bg-base text-content rounded-2xl p-4 md:p-8 shadow-lg'>
 			<div className='container mx-auto mb-3 flex items-center justify-between'>
 				{isEditingTitle ? (
@@ -320,6 +322,8 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 				</div>
 			</div>
 		</div>
+		</DocumentIdContext.Provider>
+
 	);
 };
 
