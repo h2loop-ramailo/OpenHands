@@ -9,6 +9,7 @@ import {
 import "@blocknote/core/fonts/inter.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
+import './styles.css';
 import {
 	SuggestionMenuController,
 	getDefaultReactSlashMenuItems,
@@ -297,7 +298,7 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 				/>
 			</div>
 			<div className='border border-purple-900 rounded-lg h-full'>
-				<div className='min-h-[60vh] max-h-[70vh] overflow-y-auto flex-1 bg-base-secondary p-4 mt-4'>
+				<div className='min-h-[60vh] max-h-[70vh] overflow-y-auto flex-1 p-4' style={{ backgroundColor: '#23272e' }}>
 					<BlockNoteView
 						editor={editor}
 						slashMenu={false}
