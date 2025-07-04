@@ -543,10 +543,20 @@ async def read_prompt_input(agent_state: str, multiline: bool = False) -> str:
                     key_bindings=kb,
                 )
         else:
+            kb = KeyBindings()
+
+            @kb.add('backspace')
+            def _(event: KeyPressEvent) -> None:
+                buf = event.current_buffer
+                buf.delete_before_cursor(count=1)
+                if buf.text.startswith('/'):
+                    buf.start_completion(select_first=False)
+
             with patch_stdout():
                 print_formatted_text('')
                 message = await prompt_session.prompt_async(
                     HTML('<gold>> </gold>'),
+                    key_bindings=kb,
                 )
         return message if message is not None else ''
     except (KeyboardInterrupt, EOFError):
