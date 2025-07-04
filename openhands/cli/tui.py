@@ -69,6 +69,7 @@ COMMANDS = {
     '/init': 'Initialize a new repository',
     '/status': 'Display conversation details and usage metrics',
     '/new': 'Create a new conversation',
+    '/tools': 'Try out codebase tools',
     '/settings': 'Display and modify current settings',
     '/resume': 'Resume the agent when paused',
 }

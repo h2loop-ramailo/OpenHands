@@ -2,6 +2,7 @@ import asyncio
 from pathlib import Path
 
 from prompt_toolkit import print_formatted_text
+from prompt_toolkit.formatted_text import HTML
 from prompt_toolkit.shortcuts import clear, print_container
 from prompt_toolkit.widgets import Frame, TextArea
 
@@ -72,6 +73,8 @@ async def handle_commands(
         await handle_settings_command(config, settings_store)
     elif command == '/resume':
         close_repl, new_session_requested = await handle_resume_command(event_stream)
+    elif command == '/tools':
+        await handle_tools_command()
     else:
         close_repl = True
         action = MessageAction(content=command)
@@ -306,3 +309,16 @@ def check_folder_security_agreement(config: OpenHandsConfig, current_dir: str) -
         return confirm
 
     return True
+
+
+async def handle_tools_command() -> None:
+    tools = [
+        'Generate Interface Documentation',
+        'Generate Class Diagram',
+        'Ask AI about your code',
+        'Find Bugs / Anomalies',
+        'Generate Unit Tests',
+    ]
+    selected = cli_confirm('Select a tool to try:', tools)
+    tool_title = tools[selected]
+    print_formatted_text(HTML(f'<gold>You chose <b>{tool_title}</b> tool.</gold>'))
