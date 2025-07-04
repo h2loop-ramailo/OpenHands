@@ -3,6 +3,7 @@
 # CLI Settings are handled separately in cli_settings.py
 
 import asyncio
+import os
 import sys
 import threading
 import time
@@ -13,6 +14,7 @@ from prompt_toolkit.application import Application
 from prompt_toolkit.completion import CompleteEvent, Completer, Completion
 from prompt_toolkit.document import Document
 from prompt_toolkit.formatted_text import HTML, FormattedText, StyleAndTextTuples
+from prompt_toolkit.history import FileHistory
 from prompt_toolkit.input import create_input
 from prompt_toolkit.key_binding import KeyBindings
 from prompt_toolkit.key_binding.key_processor import KeyPressEvent
@@ -516,7 +518,8 @@ class CommandCompleter(Completer):
 
 
 def create_prompt_session() -> PromptSession[str]:
-    return PromptSession(style=DEFAULT_STYLE)
+    history_path = os.path.expanduser('~/.h2loop/cli_history')
+    return PromptSession(style=DEFAULT_STYLE, history=FileHistory(history_path))
 
 
 async def read_prompt_input(agent_state: str, multiline: bool = False) -> str:
