@@ -407,7 +407,7 @@ class Runtime(FileEditRuntimeMixin):
         random_str = ''.join(
             random.choices(string.ascii_lowercase + string.digits, k=8)
         )
-        openhands_workspace_branch = f'openhands-workspace-{random_str}'
+        openhands_workspace_branch = f'h2loop-workspace-{random_str}'
 
         # Clone repository command
         clone_command = f'git clone {remote_repo_url} {dir_name}'
