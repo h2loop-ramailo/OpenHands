@@ -151,14 +151,14 @@ function AppSettingsScreen() {
             onChange={checkIfLanguageInputHasChanged}
           />
 
-          <SettingsSwitch
+          {/* <SettingsSwitch
             testId="enable-analytics-switch"
             name="enable-analytics-switch"
             defaultIsToggled={!!settings.USER_CONSENTS_TO_ANALYTICS}
             onToggle={checkIfAnalyticsSwitchHasChanged}
           >
             {t(I18nKey.ANALYTICS$SEND_ANONYMOUS_DATA)}
-          </SettingsSwitch>
+          </SettingsSwitch> */}
 
           <SettingsSwitch
             testId="enable-sound-notifications-switch"
@@ -182,7 +182,7 @@ function AppSettingsScreen() {
             </SettingsSwitch>
           )}
 
-          <SettingsInput
+          {/* <SettingsInput
             testId="max-budget-per-task-input"
             name="max-budget-per-task-input"
             type="number"
@@ -193,7 +193,7 @@ function AppSettingsScreen() {
             min={1}
             step={1}
             className="w-[680px]" // Match the width of the language field
-          />
+          /> */}
         </div>
       )}
 
