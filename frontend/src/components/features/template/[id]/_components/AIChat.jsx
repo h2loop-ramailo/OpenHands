@@ -7,7 +7,7 @@ import { IconCheck, IconSend, IconX, IconRefresh } from "@tabler/icons-react";
 import "./styles.css";
 import { updateBlock } from "../../../../../api/blocks";
 import { toast } from "sonner";
-import { useTemplateId} from "../../use-template-id";
+import { useDocumentId} from "../../use-document-id";
 // import { ScrollArea } from "@/components/ui/scroll-area";
 import {
 	DropdownMenu,
@@ -45,7 +45,7 @@ export const AIChat = createReactBlockSpec(
 			const [isLoading, setIsLoading] = useState(false);
 			const inputRef = useRef(null);
 
-			const templateId = useTemplateId();
+			const docId = useDocumentId();
 
 			useEffect(() => {
 				const timer = setTimeout(() => {
@@ -59,7 +59,7 @@ export const AIChat = createReactBlockSpec(
 			const generateContent = async (promptValue) => {
 				try {
 					const response = await updateBlock(
-						templateId,
+						docId,
 						block.id,
 						promptValue
 					);
