@@ -3,6 +3,7 @@
 # CLI Settings are handled separately in cli_settings.py
 
 import asyncio
+import os
 import sys
 import threading
 import time
@@ -13,6 +14,7 @@ from prompt_toolkit.application import Application
 from prompt_toolkit.completion import CompleteEvent, Completer, Completion
 from prompt_toolkit.document import Document
 from prompt_toolkit.formatted_text import HTML, FormattedText, StyleAndTextTuples
+from prompt_toolkit.history import FileHistory
 from prompt_toolkit.input import create_input
 from prompt_toolkit.key_binding import KeyBindings
 from prompt_toolkit.key_binding.key_processor import KeyPressEvent
@@ -69,6 +71,7 @@ COMMANDS = {
     '/init': 'Initialize a new repository',
     '/status': 'Display conversation details and usage metrics',
     '/new': 'Create a new conversation',
+    '/tools': 'Try out codebase tools',
     '/settings': 'Display and modify current settings',
     '/resume': 'Resume the agent when paused',
 }
@@ -134,17 +137,15 @@ def display_initialization_animation(text: str, is_loaded: asyncio.Event) -> Non
 def display_banner(session_id: str) -> None:
     print_formatted_text(
         HTML(r"""<gold>
-     ___                    _   _                 _
-    /  _ \ _ __   ___ _ __ | | | | __ _ _ __   __| |___
-    | | | | '_ \ / _ \ '_ \| |_| |/ _` | '_ \ / _` / __|
-    | |_| | |_) |  __/ | | |  _  | (_| | | | | (_| \__ \
-    \___ /| .__/ \___|_| |_|_| |_|\__,_|_| |_|\__,_|___/
-          |_|
+| | | | |___ \  | |      / _ \   / _ \   |  _ \
+| |_| |   __) | | |     | | | | | | | |  | |_) |
+|  _  |  / __/  | |___  | |_| | | |_| |  |  __/
+|_| |_| |_____| |_____|  \___/   \___/   |_|
     </gold>"""),
         style=DEFAULT_STYLE,
     )
 
-    print_formatted_text(HTML(f'<grey>OpenHands CLI v{__version__}</grey>'))
+    print_formatted_text(HTML(f'<grey>H2Loop CLI v{__version__}</grey>'))
 
     print_formatted_text('')
     print_formatted_text(HTML(f'<grey>Initialized conversation {session_id}</grey>'))
@@ -346,8 +347,8 @@ def display_help() -> None:
     # Version header and introduction
     print_formatted_text(
         HTML(
-            f'\n<grey>OpenHands CLI v{__version__}</grey>\n'
-            '<gold>OpenHands CLI lets you interact with the OpenHands agent from the command line.</gold>\n'
+            f'\n<grey>H2Loop CLI v{__version__}</grey>\n'
+            '<gold>H2Loop CLI lets you interact with the H2Loop agent from the command line.</gold>\n'
         )
     )
 
@@ -363,7 +364,7 @@ def display_help() -> None:
 
     # Tips section
     print_formatted_text(
-        'Some tips to get the most out of OpenHands:\n'
+        'Some tips to get the most out of H2Loop:\n'
         '• Be as specific as possible about the desired outcome or the problem to be solved.\n'
         '• Provide context, including relevant file paths and line numbers if available.\n'
         '• Break large tasks into smaller, manageable prompts.\n'
@@ -379,11 +380,7 @@ def display_help() -> None:
     print_formatted_text(HTML(commands_html))
 
     # Footer
-    print_formatted_text(
-        HTML(
-            '<grey>Learn more at: https://docs.all-hands.dev/usage/getting-started</grey>'
-        )
-    )
+    print_formatted_text(HTML('<grey>Learn more at: https://h2loop.ai</grey>'))
 
 
 def display_usage_metrics(usage_metrics: UsageMetrics) -> None:
@@ -521,7 +518,8 @@ class CommandCompleter(Completer):
 
 
 def create_prompt_session() -> PromptSession[str]:
-    return PromptSession(style=DEFAULT_STYLE)
+    history_path = os.path.expanduser('~/.h2loop/cli_history')
+    return PromptSession(style=DEFAULT_STYLE, history=FileHistory(history_path))
 
 
 async def read_prompt_input(agent_state: str, multiline: bool = False) -> str:
@@ -548,10 +546,20 @@ async def read_prompt_input(agent_state: str, multiline: bool = False) -> str:
                     key_bindings=kb,
                 )
         else:
+            kb = KeyBindings()
+
+            @kb.add('backspace')
+            def _(event: KeyPressEvent) -> None:
+                buf = event.current_buffer
+                buf.delete_before_cursor(count=1)
+                if buf.text.startswith('/'):
+                    buf.start_completion(select_first=False)
+
             with patch_stdout():
                 print_formatted_text('')
                 message = await prompt_session.prompt_async(
                     HTML('<gold>> </gold>'),
+                    key_bindings=kb,
                 )
         return message if message is not None else ''
     except (KeyboardInterrupt, EOFError):

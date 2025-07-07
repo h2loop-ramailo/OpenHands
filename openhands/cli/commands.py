@@ -2,6 +2,7 @@ import asyncio
 from pathlib import Path
 
 from prompt_toolkit import print_formatted_text
+from prompt_toolkit.formatted_text import HTML
 from prompt_toolkit.shortcuts import clear, print_container
 from prompt_toolkit.widgets import Frame, TextArea
 
@@ -72,6 +73,14 @@ async def handle_commands(
         await handle_settings_command(config, settings_store)
     elif command == '/resume':
         close_repl, new_session_requested = await handle_resume_command(event_stream)
+    elif command == '/tools':
+        await handle_tools_command()
+    elif command.startswith('/'):
+        print_formatted_text(
+            HTML(
+                '<ansired>Command not found. Type <b>/help</b> for a list of commands.</ansired>'
+            )
+        )
     else:
         close_repl = True
         action = MessageAction(content=command)
@@ -108,7 +117,7 @@ async def handle_init_command(
     config: OpenHandsConfig, event_stream: EventStream, current_dir: str
 ) -> tuple[bool, bool]:
     REPO_MD_CREATE_PROMPT = """
-        Please explore this repository. Create the file .openhands/microagents/repo.md with:
+        Please explore this repository. Create the file .h2loop/microagents/repo.md with:
             - A description of the project
             - An overview of the file structure
             - Any information on how to run tests or other relevant commands
@@ -208,7 +217,7 @@ async def handle_resume_command(
 
 
 async def init_repository(current_dir: str) -> bool:
-    repo_file_path = Path(current_dir) / '.openhands' / 'microagents' / 'repo.md'
+    repo_file_path = Path(current_dir) / '.h2loop' / 'microagents' / 'repo.md'
     init_repo = False
 
     if repo_file_path.exists():
@@ -266,7 +275,7 @@ async def init_repository(current_dir: str) -> bool:
 
 def check_folder_security_agreement(config: OpenHandsConfig, current_dir: str) -> bool:
     # Directories trusted by user for the CLI to use as workspace
-    # Config from ~/.openhands/config.toml overrides the app config
+    # Config from ~/.h2loop/config.toml overrides the app config
 
     app_config_trusted_dirs = config.sandbox.trusted_dirs
     local_config_trusted_dirs = get_local_config_trusted_dirs()
@@ -283,7 +292,7 @@ def check_folder_security_agreement(config: OpenHandsConfig, current_dir: str) -
                 text=(
                     f' Do you trust the files in this folder?\n\n'
                     f'   {current_dir}\n\n'
-                    ' OpenHands may read and execute files in this folder with your permission.'
+                    ' H2Loop may read and execute files in this folder with your permission.'
                 ),
                 style=COLOR_GREY,
                 read_only=True,
@@ -306,3 +315,16 @@ def check_folder_security_agreement(config: OpenHandsConfig, current_dir: str) -
         return confirm
 
     return True
+
+
+async def handle_tools_command() -> None:
+    tools = [
+        'Generate Interface Documentation',
+        'Generate Class Diagram',
+        'Ask AI about your code',
+        'Find Bugs / Anomalies',
+        'Generate Unit Tests',
+    ]
+    selected = cli_confirm('Select a tool to try:', tools)
+    tool_title = tools[selected]
+    print_formatted_text(HTML(f'<gold>You chose <b>{tool_title}</b> tool.</gold>'))

@@ -284,7 +284,7 @@ async def run_session(
     # Clear the terminal
     clear()
 
-    # Show OpenHands banner and session ID if not skipped
+    # Show H2Loop banner and session ID if not skipped
     if not skip_banner:
         display_banner(session_id=sid)
 
@@ -309,7 +309,7 @@ async def run_session(
             initial_message = ''
             welcome_message += '\nLoading previous conversation.'
 
-    # Show OpenHands welcome
+    # Show H2Loop welcome
     display_welcome_message(welcome_message)
 
     # The prompt_for_next_task will be triggered if the agent enters AWAITING_USER_INPUT.

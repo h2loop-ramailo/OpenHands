@@ -9,7 +9,7 @@ from openhands.cli.tui import (
 from openhands.events.event import Event
 from openhands.llm.metrics import Metrics
 
-_LOCAL_CONFIG_FILE_PATH = Path.home() / '.openhands' / 'config.toml'
+_LOCAL_CONFIG_FILE_PATH = Path.home() / '.h2loop' / 'config.toml'
 _DEFAULT_CONFIG: dict[str, dict[str, list[str]]] = {'sandbox': {'trusted_dirs': []}}
 
 
@@ -145,7 +145,7 @@ def organize_models_and_providers(
     return result_dict
 
 
-VERIFIED_PROVIDERS = ['anthropic', 'openai', 'mistral']
+VERIFIED_PROVIDERS = ['hosted_vllm', 'anthropic', 'openai', 'mistral']
 
 VERIFIED_OPENAI_MODELS = [
     'o4-mini',
@@ -176,6 +176,10 @@ VERIFIED_ANTHROPIC_MODELS = [
 
 VERIFIED_MISTRAL_MODELS = [
     'devstral-small-2505',
+]
+
+VERIFIED_HOSTED_VLLM_MODELS = [
+    'hosted_vllm/Qwen/Qwen2.5-Coder-32B-Instruct-AWQ',
 ]
 
 

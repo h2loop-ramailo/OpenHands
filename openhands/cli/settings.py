@@ -159,10 +159,21 @@ async def modify_llm_settings_basic(
     provider_completer = FuzzyWordCompleter(provider_list)
     session = PromptSession(key_bindings=kb_cancel())
 
-    # Set default provider - prefer 'anthropic' if available, otherwise use first
-    provider = 'anthropic' if 'anthropic' in provider_list else provider_list[0]
+    # Set default provider to custom vllm model (H2Loop Qwen2.5-Coder-32B)
+    # If not present, fallback to anthropic or first provider
+    DEFAULT_CUSTOM_PROVIDER = 'hosted_vllm'
+    DEFAULT_CUSTOM_MODEL = 'hosted_vllm/Qwen/Qwen2.5-Coder-32B-Instruct-AWQ'
+    DEFAULT_CUSTOM_BASE_URL = 'https://h2loop--qwen25-coder-32b-serve.modal.run/v1'
+    DEFAULT_CUSTOM_API_KEY = 'super-secret-key'
+
+    provider = (
+        DEFAULT_CUSTOM_PROVIDER
+        if DEFAULT_CUSTOM_PROVIDER in provider_list
+        else ('anthropic' if 'anthropic' in provider_list else provider_list[0])
+    )
     model = None
     api_key = None
+    base_url = None
 
     try:
         # Show the default provider but allow changing it
@@ -208,12 +219,15 @@ async def modify_llm_settings_basic(
 
         # Make sure the provider exists in organized_models
         if provider not in organized_models:
-            # If the provider doesn't exist, prefer 'anthropic' if available,
-            # otherwise use the first provider
+            # If the provider doesn't exist, prefer custom, then anthropic, then first
             provider = (
-                'anthropic'
-                if 'anthropic' in organized_models
-                else next(iter(organized_models.keys()))
+                DEFAULT_CUSTOM_PROVIDER
+                if DEFAULT_CUSTOM_PROVIDER in organized_models
+                else (
+                    'anthropic'
+                    if 'anthropic' in organized_models
+                    else next(iter(organized_models.keys()))
+                )
             )
 
         provider_models = organized_models[provider]['models']
@@ -233,18 +247,22 @@ async def modify_llm_settings_basic(
             ]
             provider_models = VERIFIED_MISTRAL_MODELS + provider_models
 
-        # Set default model to the best verified model for the provider
-        if provider == 'anthropic' and VERIFIED_ANTHROPIC_MODELS:
-            # Use the first model in the VERIFIED_ANTHROPIC_MODELS list as it's the best/newest
+        # Set default model to custom if provider is custom, else best verified model
+        if provider == DEFAULT_CUSTOM_PROVIDER:
+            default_model = (
+                DEFAULT_CUSTOM_MODEL.split('/', 1)[1]
+                if '/' in DEFAULT_CUSTOM_MODEL
+                else DEFAULT_CUSTOM_MODEL
+            )
+            base_url = DEFAULT_CUSTOM_BASE_URL
+            api_key = DEFAULT_CUSTOM_API_KEY
+        elif provider == 'anthropic' and VERIFIED_ANTHROPIC_MODELS:
             default_model = VERIFIED_ANTHROPIC_MODELS[0]
         elif provider == 'openai' and VERIFIED_OPENAI_MODELS:
-            # Use the first model in the VERIFIED_OPENAI_MODELS list as it's the best/newest
             default_model = VERIFIED_OPENAI_MODELS[0]
         elif provider == 'mistral' and VERIFIED_MISTRAL_MODELS:
-            # Use the first model in the VERIFIED_MISTRAL_MODELS list as it's the best/newest
             default_model = VERIFIED_MISTRAL_MODELS[0]
         else:
-            # For other providers, use the first model in the list
             default_model = (
                 provider_models[0] if provider_models else 'claude-sonnet-4-20250514'
             )
@@ -253,49 +271,58 @@ async def modify_llm_settings_basic(
         print_formatted_text(
             HTML(f'\n<grey>Default model: </grey><green>{default_model}</green>')
         )
-        change_model = (
-            cli_confirm(
-                'Do you want to use a different model?',
-                [f'Use {default_model}', 'Select another model'],
-            )
-            == 1
-        )
-
-        if change_model:
-            model_completer = FuzzyWordCompleter(provider_models)
-
-            # Define a validator function that allows custom models but shows a warning
-            def model_validator(x):
-                # Allow any non-empty model name
-                if not x.strip():
-                    return False
-
-                # Show a warning for models not in the predefined list, but still allow them
-                if x not in provider_models:
-                    print_formatted_text(
-                        HTML(
-                            f'<yellow>Warning: {x} is not in the predefined list for provider {provider}. '
-                            f'Make sure this model name is correct.</yellow>'
-                        )
-                    )
-                return True
-
-            model = await get_validated_input(
-                session,
-                '(Step 2/3) Select LLM Model (TAB for options, CTRL-c to cancel): ',
-                completer=model_completer,
-                validator=model_validator,
-                error_message='Model name cannot be empty',
-            )
-        else:
-            # Use the default model
+        if len(provider_models) == 1:
             model = default_model
+        else:
+            change_model = (
+                cli_confirm(
+                    'Do you want to use a different model?',
+                    [f'Use {default_model}', 'Select another model'],
+                )
+                == 1
+            )
 
-        api_key = await get_validated_input(
-            session,
-            '(Step 3/3) Enter API Key (CTRL-c to cancel): ',
-            error_message='API Key cannot be empty',
-        )
+            if change_model:
+                model_completer = FuzzyWordCompleter(provider_models)
+
+                # Define a validator function that allows custom models but shows a warning
+                def model_validator(x):
+                    # Allow any non-empty model name
+                    if not x.strip():
+                        return False
+
+                    # Show a warning for models not in the predefined list, but still allow them
+                    if x not in provider_models:
+                        print_formatted_text(
+                            HTML(
+                                f'<yellow>Warning: {x} is not in the predefined list for provider {provider}. '
+                                f'Make sure this model name is correct.</yellow>'
+                            )
+                        )
+                    return True
+
+                model = await get_validated_input(
+                    session,
+                    '(Step 2/3) Select LLM Model (TAB for options, CTRL-c to cancel): ',
+                    completer=model_completer,
+                    validator=model_validator,
+                    error_message='Model name cannot be empty',
+                )
+            else:
+                # Use the default model
+                model = default_model
+
+        # For custom provider, use default base_url and api_key unless changed
+        if provider == DEFAULT_CUSTOM_PROVIDER:
+            # Optionally prompt for base_url/api_key, or just set defaults
+            pass  # Already set above
+        else:
+            api_key = await get_validated_input(
+                session,
+                '(Step 3/3) Enter API Key (CTRL-c to cancel): ',
+                error_message='API Key cannot be empty',
+            )
+            base_url = None
 
     except (
         UserCancelledError,
@@ -315,7 +342,7 @@ async def modify_llm_settings_basic(
     llm_config = config.get_llm_config()
     llm_config.model = f'{provider}{organized_models[provider]["separator"]}{model}'
     llm_config.api_key = SecretStr(api_key)
-    llm_config.base_url = None
+    llm_config.base_url = base_url
     config.set_llm_config(llm_config)
 
     config.default_agent = OH_DEFAULT_AGENT
@@ -334,7 +361,7 @@ async def modify_llm_settings_basic(
 
     settings.llm_model = f'{provider}{organized_models[provider]["separator"]}{model}'
     settings.llm_api_key = SecretStr(api_key)
-    settings.llm_base_url = None
+    settings.llm_base_url = base_url
     settings.agent = OH_DEFAULT_AGENT
     settings.enable_default_condenser = True
 
