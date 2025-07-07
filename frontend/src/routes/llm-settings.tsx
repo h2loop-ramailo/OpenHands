@@ -306,7 +306,7 @@ function LlmSettingsScreen() {
                 href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
               />
 
-              <SettingsInput
+              {/* <SettingsInput
                 testId="search-api-key-input"
                 name="search-api-key-input"
                 label={t(I18nKey.SETTINGS$SEARCH_API_KEY)}
@@ -327,7 +327,7 @@ function LlmSettingsScreen() {
                 text={t(I18nKey.SETTINGS$SEARCH_API_KEY_OPTIONAL)}
                 linkText={t(I18nKey.SETTINGS$SEARCH_API_KEY_INSTRUCTIONS)}
                 href="https://tavily.com/"
-              />
+              /> */}
             </div>
           )}
 
@@ -381,7 +381,7 @@ function LlmSettingsScreen() {
                 href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
               /> */}
 
-              <SettingsInput
+              {/* <SettingsInput
                 testId="search-api-key-input"
                 name="search-api-key-input"
                 label={t(I18nKey.SETTINGS$SEARCH_API_KEY)}
@@ -402,7 +402,7 @@ function LlmSettingsScreen() {
                 text={t(I18nKey.SETTINGS$SEARCH_API_KEY_OPTIONAL)}
                 linkText={t(I18nKey.SETTINGS$SEARCH_API_KEY_INSTRUCTIONS)}
                 href="https://tavily.com/"
-              />
+              /> */}
 
               <SettingsDropdownInput
                 testId="agent-input"
@@ -447,7 +447,7 @@ function LlmSettingsScreen() {
                 {t(I18nKey.SETTINGS$ENABLE_MEMORY_CONDENSATION)}
               </SettingsSwitch>
 
-              <SettingsSwitch
+              {/* <SettingsSwitch
                 testId="enable-confirmation-mode-switch"
                 name="enable-confirmation-mode-switch"
                 onToggle={handleConfirmationModeIsDirty}
@@ -477,7 +477,7 @@ function LlmSettingsScreen() {
                   onInputChange={handleSecurityAnalyzerIsDirty}
                   wrapperClassName="w-full max-w-[680px]"
                 />
-              )}
+              )} */}
             </div>
           )}
         </div>

@@ -347,7 +347,7 @@ async def test_clone_or_init_repo_github_with_token(temp_dir, monkeypatch):
     # Check that the second command is the checkout
     checkout_cmd = runtime.run_action_calls[1].command
     assert 'cd repo' in checkout_cmd
-    assert 'git checkout -b openhands-workspace-' in checkout_cmd
+    assert 'git checkout -b h2loop-workspace-' in checkout_cmd
 
     assert result == 'repo'
 
@@ -378,7 +378,7 @@ async def test_clone_or_init_repo_github_no_token(temp_dir, monkeypatch):
     # Check that the second command is the checkout
     checkout_cmd = runtime.run_action_calls[1].command
     assert 'cd repo' in checkout_cmd
-    assert 'git checkout -b openhands-workspace-' in checkout_cmd
+    assert 'git checkout -b h2loop-workspace-' in checkout_cmd
 
     assert result == 'repo'
 
@@ -421,7 +421,7 @@ async def test_clone_or_init_repo_gitlab_with_token(temp_dir, monkeypatch):
     # Check that the second command is the checkout
     checkout_cmd = runtime.run_action_calls[1].command
     assert 'cd repo' in checkout_cmd
-    assert 'git checkout -b openhands-workspace-' in checkout_cmd
+    assert 'git checkout -b h2loop-workspace-' in checkout_cmd
 
     assert result == 'repo'
 
