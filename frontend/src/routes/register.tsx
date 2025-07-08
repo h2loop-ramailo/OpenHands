@@ -23,6 +23,7 @@ export default function Register() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
     setError(null);
     if (!email || !password) {
       setError("Email and password are required.");

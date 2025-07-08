@@ -23,6 +23,7 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
     setError(null);
     if (!email || !password) {
       setError("Email and password are required.");
@@ -39,7 +40,9 @@ export default function Login() {
       setTimeout(() => navigate("/"), 1000);
     } catch (err: any) {
       const msg =
-        err?.response?.data?.message || "Login failed. Please try again.";
+        err?.response?.data?.detail ||
+        err?.response?.data?.message ||
+        "Login failed. Please try again.";
       setError(msg);
       displayErrorToast(msg);
     } finally {
