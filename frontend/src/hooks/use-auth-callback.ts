@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { useIsAuthed } from "./query/use-is-authed";
+import { useAuthTokenStatus } from "#/hooks/use-auth-token";
 import { LoginMethod, setLoginMethod } from "#/utils/local-storage";
 import { useConfig } from "./query/use-config";
 
@@ -9,7 +9,7 @@ import { useConfig } from "./query/use-config";
  */
 export const useAuthCallback = () => {
   const location = useLocation();
-  const { data: isAuthed, isLoading: isAuthLoading } = useIsAuthed();
+  const { isAuthenticated, isLoading: isAuthLoading } = useAuthTokenStatus();
   const { data: config } = useConfig();
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ export const useAuthCallback = () => {
     }
 
     // Only set login method if authentication was successful
-    if (!isAuthed) {
+    if (!isAuthenticated) {
       return;
     }
 
@@ -45,5 +45,5 @@ export const useAuthCallback = () => {
       const newUrl = `${location.pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
       navigate(newUrl, { replace: true });
     }
-  }, [isAuthed, isAuthLoading, location.search, config?.APP_MODE]);
+  }, [isAuthenticated, isAuthLoading, location.search, config?.APP_MODE]);
 };

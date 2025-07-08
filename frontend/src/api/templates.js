@@ -1,16 +1,16 @@
 // "use server";
 import axios from "axios";
 import { routes } from "../constants/apiRoutes";
-import { isAuthenticated } from "../utils/isAuth";
+import { useAuthTokenStatus } from "../hooks/use-auth-token";
 import { handleError } from "../utils/handleError";
 
 export const createTemplate = async (name, description, content) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -51,11 +51,11 @@ export const createTemplate = async (name, description, content) => {
 
 export const getAllTemplates = async () => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -81,11 +81,11 @@ export const getAllTemplates = async () => {
 
 export const getTemplate = async (templateId) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -111,11 +111,11 @@ export const getTemplate = async (templateId) => {
 
 export const updateATemplate = async ({ templateId, name, content }) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -153,11 +153,11 @@ export const updateATemplate = async ({ templateId, name, content }) => {
 
 export const updateATemplateWithFile = async ({ file, templateId }) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }

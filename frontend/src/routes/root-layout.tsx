@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { I18nKey } from "#/i18n/declaration";
 import i18n from "#/i18n";
 import { useGitHubAuthUrl } from "#/hooks/use-github-auth-url";
-import { useIsAuthed } from "#/hooks/query/use-is-authed";
+import { useAuthTokenStatus } from "#/hooks/use-auth-token";
 import { useConfig } from "#/hooks/query/use-config";
 import { Sidebar } from "#/components/features/sidebar/sidebar";
 import { AuthModal } from "#/components/features/waitlist/auth-modal";
@@ -68,11 +68,7 @@ export default function MainApp() {
   const { t } = useTranslation();
 
   const config = useConfig();
-  const {
-    data: isAuthed,
-    isFetching: isFetchingAuth,
-    isError: isAuthError,
-  } = useIsAuthed();
+  const { isAuthenticated, isLoading: isFetchingAuth } = useAuthTokenStatus();
 
   // Always call the hook, but we'll only use the result when not on TOS page
   const gitHubAuthUrl = useGitHubAuthUrl({
@@ -150,19 +146,17 @@ export default function MainApp() {
   React.useEffect(() => {
     // When auth status changes (especially on logout), recheck login method
     setLoginMethodExists(checkLoginMethodExists());
-  }, [isAuthed, checkLoginMethodExists]);
+  }, [isAuthenticated, checkLoginMethodExists]);
 
   const renderAuthModal =
-    !isAuthed &&
-    !isAuthError &&
+    !isAuthenticated &&
     !isFetchingAuth &&
     !isOnTosPage &&
     config.data?.APP_MODE === "saas" &&
     !loginMethodExists; // Don't show auth modal if login method exists in local storage
 
   const renderReAuthModal =
-    !isAuthed &&
-    !isAuthError &&
+    !isAuthenticated &&
     !isFetchingAuth &&
     !isOnTosPage &&
     config.data?.APP_MODE === "saas" &&

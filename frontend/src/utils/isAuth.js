@@ -14,13 +14,13 @@ export const isAuthenticated = async () => {
   //         };
   //     }
 
-  //     const decodedToken = jwt.decode(token.value);
-  //     if (decodedToken.exp < Date.now() / 1000) {
-  //         return {
-  //             authenticated: false,
-  //             message: 'Token has expired'
-  //         };
-  //     }
+  // const decodedToken = jwt.decode(token.value);
+  // if (decodedToken.exp < Date.now() / 1000) {
+  //     return {
+  //         authenticated: false,
+  //         message: 'Token has expired'
+  //     };
+  // }
 
   //     if (token && token.value) {
   //         return {

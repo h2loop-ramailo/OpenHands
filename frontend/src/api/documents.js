@@ -1,5 +1,5 @@
 import { routes } from "../constants/apiRoutes";
-import { isAuthenticated } from "../utils/isAuth";
+import { useAuthTokenStatus } from "../hooks/use-auth-token";
 import axios from "axios";
 // import { revalidatePath } from "next/cache";
 import { getAllWorkspaces } from "./workspaces";
@@ -12,11 +12,11 @@ export const createDocument = async ({
   template_id,
 }) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -50,11 +50,11 @@ export const createDocument = async ({
 
 export const getAllDocuments = async () => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -99,11 +99,11 @@ export const getAllDocuments = async () => {
 
 export const getASingleDocument = async (id) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -136,11 +136,11 @@ export const updateDocument = async ({
   docId,
 }) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -175,11 +175,11 @@ export const updateDocument = async ({
 
 export const deleteDocument = async (id) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }

@@ -7,7 +7,7 @@ import {
 
 export default [
   layout("routes/root-layout.tsx", [
-    index("routes/home.tsx"),
+    index("routes/initial-route.tsx"),
     route("accept-tos", "routes/accept-tos.tsx"),
     route("settings", "routes/settings.tsx", [
       index("routes/llm-settings.tsx"),
@@ -27,8 +27,12 @@ export default [
       route("terminal", "routes/terminal-tab.tsx"),
       route("vscode", "routes/vscode-tab.tsx"),
     ]),
-
     route("documents/", "routes/documents-page.tsx"),
     route("document/:documentId", "routes/document-detail-page.tsx"),
+  ]),
+
+  layout("routes/auth-layout.tsx", [
+    route("/register", "routes/register.tsx"),
+    route("/login", "routes/login.tsx"),
   ]),
 ] satisfies RouteConfig;

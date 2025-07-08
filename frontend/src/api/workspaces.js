@@ -1,15 +1,15 @@
 import axios from "axios";
 import { routes } from "../constants/apiRoutes";
-import { isAuthenticated } from "../utils/isAuth";
+import { useAuthTokenStatus } from "../hooks/use-auth-token";
 import { handleError } from "../utils/handleError";
 
 export const createWorkspace = async (name, description) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -49,11 +49,11 @@ export const createWorkspace = async (name, description) => {
 
 export const getAllWorkspaces = async () => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -80,11 +80,11 @@ export const getAllWorkspaces = async () => {
 
 export const getASingleWorkspace = async (workspaceId) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -117,11 +117,11 @@ export const getASingleWorkspace = async (workspaceId) => {
 
 export const generateRepoDocumentationForAWorkspace = async (workspaceId) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }

@@ -6,9 +6,9 @@ export const routes = {
   baseURL: VITE_H2LOOP_API_BASE_URL,
   status: `${API_URL}/status`,
 
-  login: `${API_URL}/auth/login`,
-  register: `${API_URL}/auth/register`,
-  profile: `${API_URL}/auth/me`,
+  login: `${API_URL}/auth/login/`,
+  register: `${API_URL}/auth/register/`,
+  profile: `${API_URL}/auth/me/`,
 
   createWorkspaces: `${API_URL}/workspaces/`,
   getAllWorkspaces: `${API_URL}/workspaces/`,
