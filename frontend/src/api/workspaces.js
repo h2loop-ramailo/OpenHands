@@ -1,11 +1,11 @@
 import axios from "axios";
 import { routes } from "../constants/apiRoutes";
-import { useAuthTokenStatus } from "../hooks/use-auth-token";
+import { isAuthenticated as getAuthStatus } from "../utils/isAuth";
 import { handleError } from "../utils/handleError";
 
 export const createWorkspace = async (name, description) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -49,7 +49,7 @@ export const createWorkspace = async (name, description) => {
 
 export const getAllWorkspaces = async () => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -69,6 +69,7 @@ export const getAllWorkspaces = async () => {
       success: true,
     };
   } catch (error) {
+    console.error(error);
     handleError(routes.getAllWorkspaces, error);
     return {
       errorMessage:
@@ -80,7 +81,7 @@ export const getAllWorkspaces = async () => {
 
 export const getASingleWorkspace = async (workspaceId) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -117,7 +118,7 @@ export const getASingleWorkspace = async (workspaceId) => {
 
 export const generateRepoDocumentationForAWorkspace = async (workspaceId) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {

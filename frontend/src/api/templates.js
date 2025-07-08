@@ -1,12 +1,12 @@
 // "use server";
 import axios from "axios";
 import { routes } from "../constants/apiRoutes";
-import { useAuthTokenStatus } from "../hooks/use-auth-token";
+import { isAuthenticated as getAuthStatus } from "../utils/isAuth";
 import { handleError } from "../utils/handleError";
 
 export const createTemplate = async (name, description, content) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -51,7 +51,7 @@ export const createTemplate = async (name, description, content) => {
 
 export const getAllTemplates = async () => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -81,7 +81,7 @@ export const getAllTemplates = async () => {
 
 export const getTemplate = async (templateId) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -111,7 +111,7 @@ export const getTemplate = async (templateId) => {
 
 export const updateATemplate = async ({ templateId, name, content }) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -153,7 +153,7 @@ export const updateATemplate = async ({ templateId, name, content }) => {
 
 export const updateATemplateWithFile = async ({ file, templateId }) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {

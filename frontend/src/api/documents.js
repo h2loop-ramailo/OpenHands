@@ -1,5 +1,5 @@
 import { routes } from "../constants/apiRoutes";
-import { useAuthTokenStatus } from "../hooks/use-auth-token";
+import { isAuthenticated as getAuthStatus } from "../utils/isAuth";
 import axios from "axios";
 // import { revalidatePath } from "next/cache";
 import { getAllWorkspaces } from "./workspaces";
@@ -12,7 +12,7 @@ export const createDocument = async ({
   template_id,
 }) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -50,7 +50,7 @@ export const createDocument = async ({
 
 export const getAllDocuments = async () => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -99,7 +99,7 @@ export const getAllDocuments = async () => {
 
 export const getASingleDocument = async (id) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -136,7 +136,7 @@ export const updateDocument = async ({
   docId,
 }) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
@@ -175,7 +175,7 @@ export const updateDocument = async ({
 
 export const deleteDocument = async (id) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {

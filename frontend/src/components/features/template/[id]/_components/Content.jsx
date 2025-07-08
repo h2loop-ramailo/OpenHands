@@ -180,7 +180,6 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
   };
 
   useEffect(() => {
-    localStorage.clear();
     const curentTimeStamp = new Date().getTime();
     localStorage.setItem(`lastUpdatedAtBE-doc-${docId}`, curentTimeStamp);
     localStorage.setItem(
