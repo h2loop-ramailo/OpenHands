@@ -10,7 +10,7 @@ import { SettingsModal } from "#/components/shared/modals/settings/settings-moda
 import { useSettings } from "#/hooks/query/use-settings";
 import { ConversationPanel } from "../conversation-panel/conversation-panel";
 import { ConversationPanelWrapper } from "../conversation-panel/conversation-panel-wrapper";
-import { useLogout } from "#/hooks/mutation/use-logout";
+import { useLogoutToken } from "#/hooks/use-logout-token";
 import { useConfig } from "#/hooks/query/use-config";
 import { displayErrorToast } from "#/utils/custom-toast-handlers";
 import { useIsCreatingConversation } from "#/hooks/use-is-creating-conversation";
@@ -30,7 +30,7 @@ export function Sidebar() {
     isError: settingsIsError,
     isFetching: isFetchingSettings,
   } = useSettings();
-  const { mutate: logout } = useLogout();
+  const { logout } = useLogoutToken();
 
   const [settingsModalIsOpen, setSettingsModalIsOpen] = React.useState(false);
 
