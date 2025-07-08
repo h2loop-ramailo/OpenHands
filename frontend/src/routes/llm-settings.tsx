@@ -299,12 +299,12 @@ function LlmSettingsScreen() {
                 }
               />
 
-              <HelpLink
+              {/* <HelpLink
                 testId="llm-api-key-help-anchor"
                 text={t(I18nKey.SETTINGS$DONT_KNOW_API_KEY)}
                 linkText={t(I18nKey.SETTINGS$CLICK_FOR_INSTRUCTIONS)}
                 href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
-              />
+              /> */}
 
               {/* <SettingsInput
                 testId="search-api-key-input"
@@ -404,7 +404,7 @@ function LlmSettingsScreen() {
                 href="https://tavily.com/"
               /> */}
 
-              <SettingsDropdownInput
+              {/* <SettingsDropdownInput
                 testId="agent-input"
                 name="agent-input"
                 label={t(I18nKey.SETTINGS$AGENT)}
@@ -418,9 +418,9 @@ function LlmSettingsScreen() {
                 isClearable={false}
                 onInputChange={handleAgentIsDirty}
                 wrapperClassName="w-full max-w-[680px]"
-              />
+              /> */}
 
-              {config?.APP_MODE === "saas" && (
+              {/* {config?.APP_MODE === "saas" && (
                 <SettingsDropdownInput
                   testId="runtime-settings-input"
                   name="runtime-settings-input"
@@ -436,7 +436,7 @@ function LlmSettingsScreen() {
                   isDisabled
                   wrapperClassName="w-full max-w-[680px]"
                 />
-              )}
+              )} */}
 
               <SettingsSwitch
                 testId="enable-memory-condenser-switch"
