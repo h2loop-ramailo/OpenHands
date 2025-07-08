@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import OpenHands from "#/api/open-hands";
-import { useIsAuthed } from "./use-is-authed";
+import { useAuthTokenStatus } from "#/hooks/use-auth-token";
 
 export const useUserConversations = () => {
-  const { data: userIsAuthenticated } = useIsAuthed();
+  const { isAuthenticated: userIsAuthenticated } = useAuthTokenStatus();
 
   return useQuery({
     queryKey: ["user", "conversations"],

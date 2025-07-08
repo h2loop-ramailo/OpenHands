@@ -5,7 +5,7 @@ import OpenHands from "#/api/open-hands";
 import { DEFAULT_SETTINGS } from "#/services/settings";
 import { useIsOnTosPage } from "#/hooks/use-is-on-tos-page";
 import { Settings } from "#/types/settings";
-import { useIsAuthed } from "./use-is-authed";
+import { useAuthTokenStatus } from "#/hooks/use-auth-token";
 
 const getSettingsQueryFn = async (): Promise<Settings> => {
   const apiSettings = await OpenHands.getSettings();
@@ -37,7 +37,7 @@ const getSettingsQueryFn = async (): Promise<Settings> => {
 
 export const useSettings = () => {
   const isOnTosPage = useIsOnTosPage();
-  const { data: userIsAuthenticated } = useIsAuthed();
+  const { isAuthenticated: userIsAuthenticated } = useAuthTokenStatus();
 
   const query = useQuery({
     queryKey: ["settings"],

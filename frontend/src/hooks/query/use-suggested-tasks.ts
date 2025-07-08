@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { SuggestionsService } from "#/api/suggestions-service/suggestions-service.api";
 import { groupSuggestedTasks } from "#/utils/group-suggested-tasks";
-import { useIsAuthed } from "./use-is-authed";
+import { useAuthTokenStatus } from "#/hooks/use-auth-token";
 
 export const useSuggestedTasks = () => {
-  const { data: userIsAuthenticated } = useIsAuthed();
+  const { isAuthenticated: userIsAuthenticated } = useAuthTokenStatus();
 
   return useQuery({
     queryKey: ["tasks"],

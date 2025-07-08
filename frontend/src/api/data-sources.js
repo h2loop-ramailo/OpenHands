@@ -1,6 +1,6 @@
 "use server";
 import { routes } from "../constants/apiRoutes";
-import { isAuthenticated } from "../utils/isAuth";
+import { useAuthTokenStatus } from "../hooks/use-auth-token";
 import axios from "axios";
 import { handleError } from "../utils/handleError";
 
@@ -12,11 +12,11 @@ export const createADatasource = async ({
   PAT_TOKEN,
 }) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -65,11 +65,11 @@ export const createADatasource = async ({
 
 export const getAllDataSourcesByWorkspaceId = async (workspaceId) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -105,11 +105,11 @@ export const syncCodebase = async (id) => {
         error: "Id is required",
       };
     }
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -144,11 +144,11 @@ export const updateADataSource = async () => {};
 
 export const deleteADataSource = async (id) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }
@@ -175,11 +175,11 @@ export const deleteADataSource = async (id) => {
 
 export const updateADataSourceWithFile = async ({ file, docId }) => {
   try {
-    const { authenticated, error, message, token } = await isAuthenticated();
+    const { isAuthenticated, token, message } = useAuthTokenStatus();
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
       return {
-        errorMessage: error ?? message,
+        errorMessage: message,
         success: false,
       };
     }

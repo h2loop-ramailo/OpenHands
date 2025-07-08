@@ -7,8 +7,8 @@ import {
   displayErrorToast,
   displaySuccessToast,
 } from "#/utils/custom-toast-handlers";
-import { openHands } from "#/api/open-hands-axios";
 import H2LoopLogo from "#/assets/branding/h2loop-logo.svg?react";
+import { login as loginApi } from "#/api/auth-service";
 
 function validateEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -34,10 +34,7 @@ export default function Login() {
     }
     setLoading(true);
     try {
-      const response = await openHands.post("/api/v1/auth/login", {
-        username: email, // API expects username but we're using email
-        password,
-      });
+      await loginApi(email, password);
       displaySuccessToast("Login successful!");
       setTimeout(() => navigate("/"), 1000);
     } catch (err: any) {

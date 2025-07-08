@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useConfig } from "./query/use-config";
-import { useIsAuthed } from "./query/use-is-authed";
+import { useAuthTokenStatus } from "#/hooks/use-auth-token";
 import { getLoginMethod, LoginMethod } from "#/utils/local-storage";
 import { useAuthUrl } from "./use-auth-url";
 
@@ -10,7 +10,7 @@ import { useAuthUrl } from "./use-auth-url";
  */
 export const useAutoLogin = () => {
   const { data: config, isLoading: isConfigLoading } = useConfig();
-  const { data: isAuthed, isLoading: isAuthLoading } = useIsAuthed();
+  const { isAuthenticated, isLoading: isAuthLoading } = useAuthTokenStatus();
 
   // Get the stored login method
   const loginMethod = getLoginMethod();
@@ -43,7 +43,7 @@ export const useAutoLogin = () => {
     }
 
     // Don't auto-login if already authenticated
-    if (isAuthed) {
+    if (isAuthenticated) {
       return;
     }
 
@@ -73,7 +73,7 @@ export const useAutoLogin = () => {
     }
   }, [
     config?.APP_MODE,
-    isAuthed,
+    isAuthenticated,
     isConfigLoading,
     isAuthLoading,
     loginMethod,
