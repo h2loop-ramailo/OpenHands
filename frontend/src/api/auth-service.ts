@@ -18,8 +18,8 @@ export async function login(email: string, password: string) {
     },
   });
 
-  if (response.data && response.data.token) {
-    localStorage.setItem("token", response.data.token);
+  if (response.data && response.data.access_token) {
+    localStorage.setItem("token", response.data.access_token);
   }
 
   return response;

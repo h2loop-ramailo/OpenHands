@@ -37,7 +37,7 @@ export default function Login() {
     try {
       await loginApi(email, password);
       displaySuccessToast("Login successful!");
-      setTimeout(() => navigate("/"), 1000);
+      setTimeout(() => navigate("/"), 100);
     } catch (err: any) {
       const msg =
         err?.response?.data?.detail ||

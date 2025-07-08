@@ -37,7 +37,7 @@ export default function Register() {
     try {
       await registerApi(email, password);
       displaySuccessToast("Registration successful! Please log in.");
-      setTimeout(() => navigate("/login"), 1000);
+      setTimeout(() => navigate("/login"), 100);
     } catch (err: any) {
       const msg =
         err?.response?.data?.message ||
