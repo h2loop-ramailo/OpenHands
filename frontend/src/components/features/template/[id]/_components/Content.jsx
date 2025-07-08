@@ -211,40 +211,42 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 
   // Load Saved Content
   useEffect(() => {
-    if (!editor || !hiddenEditor) {
-      toast.error("Error loading document");
-      return;
-    }
-
     const loadSavedContent = async () => {
-      setLoading(true);
       try {
-        const { success, data, errorMessage } = await getASingleDocument(docId);
-        if (!success) {
-          toast.error(errorMessage || "Error loading document");
+        if (!editor || !hiddenEditor) {
+          toast.error("Error loading document");
           return;
-        } else {
-          setTitle(data.name);
-          let parsedContent;
-          if (data && data.content_type == "MARKDOWN") {
-            parsedContent = await hiddenEditor.tryParseMarkdownToBlocks(
-              data.content,
-            );
-          } else {
-            parsedContent = JSON.parse(data.content || "[]");
-          }
-
-          parsedContent = updateMermaidBlocks(parsedContent);
-
-          if (!editor || !hiddenEditor) {
-            console.log("Editor destroyed");
-            return;
-          }
-
-          if (parsedContent.length !== 0) {
-            editor.replaceBlocks(editor.document, parsedContent);
-          }
         }
+        setLoading(true);
+
+        const { success, data, errorMessage } = await getASingleDocument(docId);
+        setTimeout(async () => {
+          if (!success) {
+            toast.error(errorMessage || "Error loading document");
+            return;
+          } else {
+            setTitle(data.name);
+            let parsedContent;
+            if (data && data.content_type == "MARKDOWN") {
+              parsedContent = await hiddenEditor.tryParseMarkdownToBlocks(
+                data.content,
+              );
+            } else {
+              parsedContent = JSON.parse(data.content || "[]");
+            }
+
+            parsedContent = updateMermaidBlocks(parsedContent);
+
+            if (!editor || !hiddenEditor) {
+              console.log("Editor destroyed");
+              return;
+            }
+
+            if (parsedContent.length !== 0) {
+              editor.replaceBlocks(editor.document, parsedContent);
+            }
+          }
+        }, 10);
       } catch (error) {
         toast.error("Error loading document");
       } finally {
