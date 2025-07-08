@@ -9,10 +9,7 @@ import {
 } from "#/utils/custom-toast-handlers";
 import H2LoopLogo from "#/assets/branding/h2loop-logo.svg?react";
 import { register as registerApi } from "#/api/auth-service";
-
-function validateEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+import { validateEmail } from "#/utils/validators";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -35,8 +32,10 @@ export default function Register() {
     }
     setLoading(true);
     try {
-      await registerApi(email, password);
-      displaySuccessToast("Registration successful! Please log in.");
+      const response = await registerApi(email, password);
+      displaySuccessToast(
+        response.data.message ?? "Registration successful! Please log in.",
+      );
       setTimeout(() => navigate("/login"), 100);
     } catch (err: any) {
       const msg =

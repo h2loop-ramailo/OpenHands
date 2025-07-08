@@ -9,10 +9,7 @@ import {
 } from "#/utils/custom-toast-handlers";
 import H2LoopLogo from "#/assets/branding/h2loop-logo.svg?react";
 import { login as loginApi } from "#/api/auth-service";
-
-function validateEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+import { validateEmail } from "#/utils/validators";
 
 export default function Login() {
   const [email, setEmail] = useState("");
