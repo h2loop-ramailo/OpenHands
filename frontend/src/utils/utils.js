@@ -209,19 +209,8 @@ export async function getTheMarkdownContentForEditor(blocksJSON, hiddenEditor) {
 
   const _hiddenEditorBlocks = hiddenEditor.document;
 
-  console.log("Original blocks:", JSON.parse(JSON.stringify(blocksJSON)));
   let updatedBlocks = convertAIChatToCodeBlock(_hiddenEditorBlocks);
-  console.log(
-    "After AI Chat conversion:",
-    JSON.parse(JSON.stringify(updatedBlocks)),
-  );
   updatedBlocks = convertMermaidToCodeBlock(updatedBlocks);
-  console.log(
-    "After Mermaid conversion:",
-    JSON.parse(JSON.stringify(updatedBlocks)),
-  );
-
-  console.log(updatedBlocks);
 
   const documentMarkdown =
     await hiddenEditor.blocksToMarkdownLossy(updatedBlocks);
