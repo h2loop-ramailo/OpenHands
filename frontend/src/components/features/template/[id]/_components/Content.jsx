@@ -236,6 +236,16 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 
             parsedContent = updateMermaidBlocks(parsedContent);
 
+            if (
+              Array.isArray(parsedContent) &&
+              Array.isArray(editor.document)
+            ) {
+              parsedContent = parsedContent.map((block, idx) => ({
+                ...block,
+                id: editor.document[idx]?.id || block.id,
+              }));
+            }
+
             if (!editor || !hiddenEditor) {
               console.log("Editor destroyed");
               return;
