@@ -34,6 +34,9 @@ import {
 } from "../../../../../utils/utils";
 import { DocumentIdContext } from "../../use-document-id";
 
+const LAST_UPDATED_AT_BE_PREFIX = "lastUpdatedAtBE-doc-";
+const LAST_UPDATED_AT_LOCALSTORAGE_PREFIX = "lastUpdatedAtLocalstorage-doc-";
+
 const schema = BlockNoteSchema.create({
   blockSpecs: {
     ...defaultBlockSpecs,
@@ -112,7 +115,7 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
     localStorage.setItem(
-      `lastUpdatedAtLocalstorage-doc-${docId}`,
+      `${LAST_UPDATED_AT_LOCALSTORAGE_PREFIX}${docId}`,
       new Date().getTime(),
     );
   };
@@ -126,7 +129,7 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 
   const saveBlocks = () => {
     localStorage.setItem(
-      `lastUpdatedAtLocalstorage-doc-${docId}`,
+      `${LAST_UPDATED_AT_LOCALSTORAGE_PREFIX}${docId}`,
       new Date().getTime(),
     );
   };
@@ -165,7 +168,7 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
       });
       if (success) {
         localStorage.setItem(
-          `lastUpdatedAtBE-doc-${docId}`,
+          `${LAST_UPDATED_AT_BE_PREFIX}${docId}`,
           new Date().getTime(),
         );
         toast.success("Document autosaved");
@@ -180,10 +183,21 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
   };
 
   useEffect(() => {
+    Object.keys(localStorage).forEach((key) => {
+      if (
+        key.startsWith(LAST_UPDATED_AT_BE_PREFIX) ||
+        key.startsWith(LAST_UPDATED_AT_LOCALSTORAGE_PREFIX)
+      ) {
+        localStorage.removeItem(key);
+      }
+    });
     const curentTimeStamp = new Date().getTime();
-    localStorage.setItem(`lastUpdatedAtBE-doc-${docId}`, curentTimeStamp);
     localStorage.setItem(
-      `lastUpdatedAtLocalstorage-doc-${docId}`,
+      `${LAST_UPDATED_AT_BE_PREFIX}${docId}`,
+      curentTimeStamp,
+    );
+    localStorage.setItem(
+      `${LAST_UPDATED_AT_LOCALSTORAGE_PREFIX}${docId}`,
       curentTimeStamp,
     );
   }, []);
@@ -193,8 +207,8 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
 
     const interval = setInterval(async () => {
       if (
-        localStorage.getItem(`lastUpdatedAtLocalstorage-doc-${docId}`) >
-        localStorage.getItem(`lastUpdatedAtBE-doc-${docId}`)
+        localStorage.getItem(`${LAST_UPDATED_AT_LOCALSTORAGE_PREFIX}${docId}`) >
+        localStorage.getItem(`${LAST_UPDATED_AT_BE_PREFIX}${docId}`)
       ) {
         await saveBlocksToBackend();
       }
