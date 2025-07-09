@@ -1,12 +1,12 @@
 // "use server";
 import { routes } from "../constants/apiRoutes";
-import { useAuthTokenStatus } from "../hooks/use-auth-token";
+import { isAuthenticated as getAuthStatus } from "../utils/isAuth";
 import axios from "axios";
 import { handleError } from "../utils/handleError";
 
 export const updateBlock = async (docId, blockId, prompt) => {
   try {
-    const { isAuthenticated, token, message } = useAuthTokenStatus();
+    const { isAuthenticated, token, message } = getAuthStatus();
 
     if (!isAuthenticated) {
       return {
