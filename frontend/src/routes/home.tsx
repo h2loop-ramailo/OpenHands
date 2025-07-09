@@ -28,6 +28,7 @@ function HomeScreen() {
       <main className="flex flex-col md:flex-row justify-between gap-8">
         <RepoConnector
           onRepoSelection={(title) => setSelectedRepoTitle(title)}
+          onBranchSelection={(_) => {}}
         />
         <hr className="md:hidden border-[#717888]" />
         {providersAreSet && <TaskSuggestions filterFor={selectedRepoTitle} />}

@@ -1,11 +1,13 @@
 import React from "react";
 import {
   Dialog,
+  DialogTitle as RawDialogTitle,
   DialogContent as RawDialogContent,
 } from "#/components/ui/dialog";
 import styles from "./ToolCard.module.css";
 import { RepoConnector } from "../repo-connector";
 import { BrandButton } from "../../settings/brand-button";
+import { VisuallyHidden } from "@heroui/react";
 
 const DialogContent = RawDialogContent as React.FC<
   React.PropsWithChildren<any>
@@ -26,9 +28,21 @@ export function ToolModal({
   image,
   description,
 }: ToolModalProps) {
+  const [selectedRepoTitle, setSelectedRepoTitle] = React.useState<
+    string | null
+  >(null);
+  const [selectedBranchName, setSelectedBranchName] = React.useState<
+    string | null
+  >(null);
+
+  const DialogTitle = RawDialogTitle as React.FC<{ children: React.ReactNode }>;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="p-0 max-w-3xl w-full rounded-2xl bg-[#181b20] border-0 shadow-2xl">
+        <VisuallyHidden>
+          <DialogTitle>{title}</DialogTitle>
+        </VisuallyHidden>
         <div className="flex flex-col items-center p-8 gap-4 w-full max-w-2xl mx-auto">
           <div className="flex flex-col items-center w-full">
             <img
@@ -54,19 +68,12 @@ export function ToolModal({
             {/* Repo/Branch selection */}
             <div className="flex flex-col items-center w-full max-w-md mx-auto">
               <RepoConnector
-                onRepoSelection={(title) => {
-                  // setSelectedRepoTitle(title)
-                }}
+                onRepoSelection={(title) => setSelectedRepoTitle(title)}
+                onBranchSelection={(branchName) =>
+                  setSelectedBranchName(branchName)
+                }
+                displayLaunchButton={false}
               />
-            </div>
-            {/* Dynamic dropdown placeholder */}
-            <div className="flex flex-col items-center w-full max-w-md mx-auto">
-              <div className="text-sm text-neutral-400 mb-1 text-center">
-                Select Class/Interface Name
-              </div>
-              <div className="bg-[#23272e] rounded-lg p-4 min-h-[60px] flex items-center justify-center text-neutral-500 w-full">
-                [Dynamic dropdown goes here]
-              </div>
             </div>
             <div className="flex justify-center w-full">
               <BrandButton
@@ -74,8 +81,9 @@ export function ToolModal({
                 variant="primary"
                 type="button"
                 className="mt-4 max-w-md w-full text-lg font-bold"
+                isDisabled={!selectedRepoTitle}
                 onClick={() => {
-                  /* TODO: handle generate and navigation */
+                  console.log(selectedRepoTitle, selectedBranchName);
                 }}
               >
                 Create / Generate

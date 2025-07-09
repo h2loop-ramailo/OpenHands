@@ -20,10 +20,14 @@ import {
 
 interface RepositorySelectionFormProps {
   onRepoSelection: (repoTitle: string | null) => void;
+  onBranchSelection: (branchName: string | null) => void;
+  displayLaunchButton?: boolean;
 }
 
 export function RepositorySelectionForm({
   onRepoSelection,
+  onBranchSelection,
+  displayLaunchButton = true,
 }: RepositorySelectionFormProps) {
   const [selectedRepository, setSelectedRepository] =
     React.useState<GitRepository | null>(null);
@@ -103,6 +107,7 @@ export function RepositorySelectionForm({
 
   const handleBranchSelection = (key: React.Key | null) => {
     const selectedBranchObj = branches?.find((branch) => branch.name === key);
+    if (selectedBranch) onBranchSelection(selectedBranchObj?.name ?? "");
     setSelectedBranch(selectedBranchObj || null);
     // Reset the manually cleared flag when a branch is explicitly selected
     branchManuallyClearedRef.current = false;
@@ -198,26 +203,28 @@ export function RepositorySelectionForm({
 
       {renderBranchSelector()}
 
-      <BrandButton
-        testId="repo-launch-button"
-        variant="primary"
-        type="button"
-        isDisabled={
-          !selectedRepository ||
-          isCreatingConversation ||
-          isLoadingRepositories ||
-          isRepositoriesError
-        }
-        onClick={() =>
-          createConversation({
-            selectedRepository,
-            selected_branch: selectedBranch?.name,
-          })
-        }
-      >
-        {!isCreatingConversation && "Launch"}
-        {isCreatingConversation && t("HOME$LOADING")}
-      </BrandButton>
+      {displayLaunchButton && (
+        <BrandButton
+          testId="repo-launch-button"
+          variant="primary"
+          type="button"
+          isDisabled={
+            !selectedRepository ||
+            isCreatingConversation ||
+            isLoadingRepositories ||
+            isRepositoriesError
+          }
+          onClick={() =>
+            createConversation({
+              selectedRepository,
+              selected_branch: selectedBranch?.name,
+            })
+          }
+        >
+          {!isCreatingConversation && "Launch"}
+          {isCreatingConversation && t("HOME$LOADING")}
+        </BrandButton>
+      )}
     </div>
   );
 }
