@@ -1,25 +1,37 @@
 import styles from "./ToolCard.module.css";
-import { useNavigate } from "react-router";
+import { useState } from "react";
+import { ToolModal } from "./tool-modal";
 
-type ToolCardProps = {
+export type ToolCardProps = {
   title: string;
   image: string;
   description: string;
 };
 
 export function ToolCard({ title, image, description }: ToolCardProps) {
-  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   return (
-    <div
-      className={styles.card}
-      onClick={() => {
-        navigate("/templates/8");
-      }}
-    >
-      <img src={image} alt={title} className={styles.image} />
-      <h3 className={styles.title}>{title}</h3>
-      <p className={styles.description}>{description}</p>
-    </div>
+    <>
+      <div
+        className={styles.card}
+        onClick={() => setOpen(true)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => (e.key === "Enter" ? setOpen(true) : undefined)}
+        aria-label={`Open modal for ${title}`}
+      >
+        <img src={image} alt={title} className={styles.image} />
+        <h3 className={styles.title}>{title}</h3>
+        <p className={styles.description}>{description}</p>
+      </div>
+      <ToolModal
+        open={open}
+        onOpenChange={setOpen}
+        title={title}
+        image={image}
+        description={description}
+      />
+    </>
   );
 }
