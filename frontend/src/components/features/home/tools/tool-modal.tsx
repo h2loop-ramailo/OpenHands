@@ -8,6 +8,7 @@ import styles from "./ToolCard.module.css";
 import { RepoConnector } from "../repo-connector";
 import { BrandButton } from "../../settings/brand-button";
 import { VisuallyHidden } from "@heroui/react";
+import { SettingsInput } from "../../settings/settings-input";
 
 const DialogContent = RawDialogContent as React.FC<
   React.PropsWithChildren<any>
@@ -34,6 +35,7 @@ export function ToolModal({
   const [selectedBranchName, setSelectedBranchName] = React.useState<
     string | null
   >(null);
+  const [className, setClassName] = React.useState<string>("");
 
   const DialogTitle = RawDialogTitle as React.FC<{ children: React.ReactNode }>;
 
@@ -75,15 +77,31 @@ export function ToolModal({
                 displayLaunchButton={false}
               />
             </div>
+            {title === "Generate Class Diagram" && (
+              <div className="flex flex-col items-center w-full max-w-md mx-auto mt-4">
+                <SettingsInput
+                  label="Class Name"
+                  type="text"
+                  value={className}
+                  onChange={setClassName}
+                  placeholder="Enter a class name..."
+                  className="w-full"
+                />
+              </div>
+            )}
             <div className="flex justify-center w-full">
               <BrandButton
                 testId="tool-generate-button"
                 variant="primary"
                 type="button"
                 className="mt-4 max-w-md w-full text-lg font-bold"
-                isDisabled={!selectedRepoTitle || !selectedBranchName}
+                isDisabled={
+                  !selectedRepoTitle ||
+                  !selectedBranchName ||
+                  (title === "Generate Class Diagram" && !className.trim())
+                }
                 onClick={() => {
-                  console.log(selectedRepoTitle, selectedBranchName);
+                  console.log(selectedRepoTitle, selectedBranchName, className);
                 }}
               >
                 Create / Generate
