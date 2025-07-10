@@ -303,7 +303,7 @@ function LlmSettingsScreen() {
                 testId="llm-api-key-help-anchor"
                 text={t(I18nKey.SETTINGS$DONT_KNOW_API_KEY)}
                 linkText={t(I18nKey.SETTINGS$CLICK_FOR_INSTRUCTIONS)}
-                href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
+                href="https://h2loop.ai/"
               /> */}
 
               {/* <SettingsInput
@@ -378,7 +378,7 @@ function LlmSettingsScreen() {
                 testId="llm-api-key-help-anchor-advanced"
                 text={t(I18nKey.SETTINGS$DONT_KNOW_API_KEY)}
                 linkText={t(I18nKey.SETTINGS$CLICK_FOR_INSTRUCTIONS)}
-                href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
+                href="https://h2loop.ai/"
               /> */}
 
               {/* <SettingsInput

@@ -95,7 +95,7 @@ export function MCPConfigViewer({ mcpConfig }: MCPConfigViewerProps) {
           {t(I18nKey.SETTINGS$MCP_CONFIGURATION)}
         </h3>
         <a
-          href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
+          href="https://h2loop.ai/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xs text-blue-400 hover:underline"

@@ -41,7 +41,7 @@ export function HomeHeader() {
         <p className="text-sm">
           {t("HOME$NOT_SURE_HOW_TO_START")}{" "}
           <a
-            href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
+            href="https://h2loop.ai/"
             target="_blank"
             rel="noopener noreferrer"
             className="underline underline-offset-2"
