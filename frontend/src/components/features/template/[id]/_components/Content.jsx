@@ -30,7 +30,7 @@ import ExportDocumentContent from "./Export";
 import {
   convertMermaidToCodeBlock,
   getTheMarkdownContentForEditor,
-  updateMermaidBlocks,
+  updateCustomBlocks,
 } from "../../../../../utils/utils";
 import { DocumentIdContext } from "../../use-document-id";
 
@@ -233,41 +233,35 @@ const Content = ({ workspacId, templateId, docId, onEditorReady }) => {
         setLoading(true);
 
         const { success, data, errorMessage } = await getASingleDocument(docId);
+
         setTimeout(async () => {
           if (!success) {
             toast.error(errorMessage || "Error loading document");
             return;
+          }
+
+          setTitle(data.name);
+          let parsedContent;
+
+          if (data && data.content_type == "MARKDOWN") {
+            parsedContent = await hiddenEditor.tryParseMarkdownToBlocks(
+              data.content,
+            );
           } else {
-            setTitle(data.name);
-            let parsedContent;
-            if (data && data.content_type == "MARKDOWN") {
-              parsedContent = await hiddenEditor.tryParseMarkdownToBlocks(
-                data.content,
-              );
-            } else {
-              parsedContent = JSON.parse(data.content || "[]");
-            }
+            parsedContent = JSON.parse(data.content || "[]");
+          }
 
-            parsedContent = updateMermaidBlocks(parsedContent);
+          parsedContent = updateCustomBlocks(parsedContent);
 
-            if (
-              Array.isArray(parsedContent) &&
-              Array.isArray(editor.document)
-            ) {
-              parsedContent = parsedContent.map((block, idx) => ({
-                ...block,
-                id: editor.document[idx]?.id || block.id,
-              }));
-            }
+          if (Array.isArray(parsedContent) && Array.isArray(editor.document)) {
+            parsedContent = parsedContent.map((block, idx) => ({
+              ...block,
+              id: editor.document[idx]?.id || block.id,
+            }));
+          }
 
-            if (!editor || !hiddenEditor) {
-              console.log("Editor destroyed");
-              return;
-            }
-
-            if (parsedContent.length !== 0) {
-              editor.replaceBlocks(editor.document, parsedContent);
-            }
+          if (parsedContent.length !== 0) {
+            editor.replaceBlocks(editor.document, parsedContent);
           }
         }, 10);
       } catch (error) {
