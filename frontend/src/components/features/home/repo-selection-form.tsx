@@ -74,8 +74,10 @@ export function RepositorySelectionForm({
       // Select main if it exists, otherwise select master if it exists
       if (mainBranch) {
         setSelectedBranch(mainBranch);
+        onBranchSelection(mainBranch?.name);
       } else if (masterBranch) {
         setSelectedBranch(masterBranch);
+        onBranchSelection(masterBranch?.name);
       }
     }
   }, [branches, isLoadingBranches, selectedBranch]);
@@ -102,6 +104,7 @@ export function RepositorySelectionForm({
     if (selectedRepo) onRepoSelection(selectedRepo.full_name);
     setSelectedRepository(selectedRepo || null);
     setSelectedBranch(null); // Reset branch selection when repo changes
+    onBranchSelection(null);
     branchManuallyClearedRef.current = false; // Reset the flag when repo changes
   };
 
@@ -118,6 +121,7 @@ export function RepositorySelectionForm({
       setSelectedRepository(null);
       setSelectedBranch(null);
       onRepoSelection(null);
+      onBranchSelection(null);
     } else if (value.startsWith("https://")) {
       const repoName = sanitizeQuery(value);
       setSearchQuery(repoName);

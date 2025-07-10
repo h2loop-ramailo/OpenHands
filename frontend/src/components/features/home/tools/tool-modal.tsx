@@ -81,7 +81,7 @@ export function ToolModal({
                 variant="primary"
                 type="button"
                 className="mt-4 max-w-md w-full text-lg font-bold"
-                isDisabled={!selectedRepoTitle}
+                isDisabled={!selectedRepoTitle || !selectedBranchName}
                 onClick={() => {
                   console.log(selectedRepoTitle, selectedBranchName);
                 }}
