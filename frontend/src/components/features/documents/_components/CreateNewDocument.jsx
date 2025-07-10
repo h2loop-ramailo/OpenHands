@@ -69,12 +69,14 @@ const CreateNewDocument = () => {
       <DialogTrigger asChild>
         <Button variant="outline">Create New Document</Button>
       </DialogTrigger>
-      <DialogContent className="sm:min-w-[1080px] px-3 py-5 space-y-0">
-        <DialogHeader>
-          <DialogTitle>Create New Document</DialogTitle>
+      <DialogContent className="sm:min-w-[650px] max-w-xl w-full px-0 py-0 flex flex-col items-center justify-center bg-[#181b20] rounded-2xl border-1 border-[#0072FF] shadow-2xl">
+        <DialogHeader className="w-full flex flex-col items-center justify-center pt-8 pb-3">
+          <DialogTitle className="text-center text-2xl font-bold">
+            Create New Document
+          </DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-4 min-h-[450px]">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center justify-center gap-5 w-full px-10 pb-10">
+          <div className="flex items-center justify-center gap-5 w-full">
             <WorkspaceSelect
               selectedWorkspace={selectedWorkspaceId}
               setSelectedWorkspace={setSelectedWorkspaceId}
@@ -83,28 +85,26 @@ const CreateNewDocument = () => {
             />
             <Button
               variant="outline"
-              className="w-[150px]"
-              disabled={!selectedWorkspaceId}
-              onClick={() => setIsOpen(true)}
-            >
-              Select a Template
-            </Button>
-            <p className="text-neutral-300 text-sm">OR</p>
-            <Button
-              variant="outline"
               onClick={handleCreateBlankDocument}
               disabled={!selectedWorkspaceId}
             >
               Create Blank Document
             </Button>
           </div>
-          <h2 className="text-center my-2 font-bold">OR</h2>
-          <Button
-            variant="whiteblack"
-            onClick={() => setShowCreateWorkspace(true)}
-          >
-            + Create new workspace
-          </Button>
+          <div className="flex flex-col items-center w-full mt-2 mb-0">
+            <div className="flex items-center w-full justify-center gap-2 my-2">
+              <div className="h-px flex-1 bg-neutral-700" />
+              <span className="text-neutral-400 text-xs font-semibold">OR</span>
+              <div className="h-px flex-1 bg-neutral-700" />
+            </div>
+            <Button
+              variant="whiteblack"
+              onClick={() => setShowCreateWorkspace(true)}
+              className="w-[250px] mx-auto mt-2"
+            >
+              + Create new workspace
+            </Button>
+          </div>
         </div>
         <CreateWorkspaceModal
           open={showCreateWorkspace}
