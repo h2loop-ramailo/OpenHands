@@ -35,7 +35,7 @@ export function MCPConfigEditor({ mcpConfig, onChange }: MCPConfigEditorProps) {
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center">
           <a
-            href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
+            href="https://h2loop.ai/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-blue-400 hover:underline mr-3"

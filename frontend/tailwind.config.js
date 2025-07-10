@@ -5,8 +5,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#C9B974", // nice yellow
-        logo: "#CFB755", // color for logos and icons
+        primary: "#0072FF", // nice blue
+        secondary: "#00C6FF",
+        "primary-text": "#F1F1F1",
+        logo: "#242124", // color for logos and icons
         base: "#0D0F11", // dark background also used for tooltips
         "base-secondary": "#24272E", // lighter background
         danger: "#E76A5E",

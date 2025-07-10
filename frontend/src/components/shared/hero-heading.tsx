@@ -17,7 +17,7 @@ export function HeroHeading() {
           <a
             rel="noopener noreferrer"
             target="_blank"
-            href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
+            href="https://h2loop.ai/"
             className="text-white underline underline-offset-[3px]"
           >
             {t(I18nKey.LANDING$START_HELP_LINK)}

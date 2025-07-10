@@ -69,7 +69,7 @@ export function ApiKeysManager() {
             components={{
               a: (
                 <a
-                  href="https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/"
+                  href="https://h2loop.ai/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-400 hover:underline"
