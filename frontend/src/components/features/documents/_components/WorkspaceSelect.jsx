@@ -11,6 +11,8 @@ import { getAllWorkspaces } from "../../../../api/workspaces";
 import { useEffect, useState } from "react";
 
 export const WorkspaceSelect = ({
+  workspaces,
+  setWorkspaces,
   selectedWorkspace,
   setSelectedWorkspace,
   fullWidth = false,
@@ -22,11 +24,13 @@ export const WorkspaceSelect = ({
 
   async function getData() {
     setLoading(true);
-    const data = await getAllWorkspaces();
-    if (data.success) {
-      setData(data.data);
+    const response = await getAllWorkspaces();
+    if (response.success) {
+      setData(response.data);
+      if (workspaces) workspaces = response.data;
+      if (setWorkspaces) setWorkspaces(response.data);
     } else {
-      setError(data.errorMessage);
+      setError(response.errorMessage);
     }
     setLoading(false);
   }
@@ -44,6 +48,7 @@ export const WorkspaceSelect = ({
   return (
     <Select
       defaultValue={selectedWorkspace}
+      value={selectedWorkspace}
       onValueChange={(value) => setSelectedWorkspace(value)}
       className="bg-neutral-900 text-neutral-100 rounded-md border border-neutral-700"
     >
@@ -57,7 +62,7 @@ export const WorkspaceSelect = ({
       </SelectTrigger>
       <SelectContent className="bg-neutral-900 text-neutral-100 border border-neutral-700 rounded-md shadow-lg">
         <SelectGroup>
-          {data.map((workspace) => (
+          {(workspaces || data).map((workspace) => (
             <SelectItem
               value={workspace.id}
               key={workspace.id}
