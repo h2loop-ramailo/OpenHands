@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import H2LoopLogo from "#/assets/branding/h2loop-logo.svg?react";
+import H2LoopLogo from "#/assets/branding/h2loop-only-logo-white.svg?react";
 import { I18nKey } from "#/i18n/declaration";
 import { TooltipButton } from "./tooltip-button";
 
