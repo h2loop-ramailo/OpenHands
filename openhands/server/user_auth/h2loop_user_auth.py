@@ -156,7 +156,6 @@ class H2LoopUserAuth(UserAuth):
         instance = cls()
 
         token = await instance._extract_token_from_request(request)
-        print("token", token)
         if token:
             instance._access_token = SecretStr(token)
 

@@ -24,7 +24,6 @@ async def get_access_token(request: Request) -> SecretStr | None:
 async def get_user_id(request: Request) -> str | None:
     user_auth = await get_user_auth(request)
     user_id = await user_auth.get_user_id()
-    print("user_id from user_auth", user_id)
     return user_id
 
 
