@@ -34,7 +34,7 @@ class H2LoopUserAuth(UserAuth):
 
     async def _get_user_info_from_auth_api(self, token: str) -> dict:
         """Get user info from your authentication API"""
-        auth_api_url = "https://your-auth-api.com/api/v1/auth/me"
+        auth_api_url = "https://coreapi.h2loop.ai/api/v1/auth/me"
 
         async with httpx.AsyncClient() as client:
             response = await client.get(
