@@ -166,21 +166,21 @@ function AppContent() {
                 to: "terminal",
                 icon: <TerminalIcon />,
               },
-              { label: "Jupyter", to: "jupyter", icon: <JupyterIcon /> },
-              {
-                label: <ServedAppLabel />,
-                to: "served",
-                icon: <FaServer />,
-              },
-              {
-                label: (
-                  <div className="flex items-center gap-1">
-                    {t(I18nKey.BROWSER$TITLE)}
-                  </div>
-                ),
-                to: "browser",
-                icon: <GlobeIcon />,
-              },
+              // { label: "Jupyter", to: "jupyter", icon: <JupyterIcon /> },
+              // {
+              //   label: <ServedAppLabel />,
+              //   to: "served",
+              //   icon: <FaServer />,
+              // },
+              // {
+              //   label: (
+              //     <div className="flex items-center gap-1">
+              //       {t(I18nKey.BROWSER$TITLE)}
+              //     </div>
+              //   ),
+              //   to: "browser",
+              //   icon: <GlobeIcon />,
+              // },
             ]}
           >
             {/* Use both Outlet and TabContent */}

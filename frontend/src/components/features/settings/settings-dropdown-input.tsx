@@ -58,7 +58,8 @@ export function SettingsDropdownInput({
         placeholder={placeholder}
         className="w-full"
         classNames={{
-          popoverContent: "bg-tertiary rounded-xl border border-[#717888]",
+          popoverContent:
+            "bg-tertiary rounded-xl border border-[#717888] pointer-events-auto",
         }}
         inputProps={{
           classNames: {

@@ -21,7 +21,7 @@
   inset: 0;
   border-radius: 1.25rem;
   padding: 2px;
-  background: linear-gradient(90deg, #ffb6ec 0%, #b3a8f7 50%, #7fdcff 100%);
+  background: linear-gradient(90deg, #181b20 0%, #0072FF 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -29,8 +29,8 @@
   z-index: 0;
 }
 .card:hover {
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.18);
+  transform: translateY(-2px) scale(1.03);
   border-color: #3c3c4a;
   cursor: pointer;
 }
@@ -48,7 +48,7 @@
   margin-bottom: 0.5rem;
   text-align: center;
   color: #f8f8ff;
-  background: linear-gradient(90deg, #ffb6ec 0%, #b3a8f7 50%, #7fdcff 100%);
+  background: linear-gradient(90deg, #0072FF 0%, #ebe9e9 40%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

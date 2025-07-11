@@ -7,9 +7,15 @@ import { useUserProviders } from "#/hooks/use-user-providers";
 
 interface RepoConnectorProps {
   onRepoSelection: (repoTitle: string | null) => void;
+  onBranchSelection: (branchName: string | null) => void;
+  displayLaunchButton?: boolean;
 }
 
-export function RepoConnector({ onRepoSelection }: RepoConnectorProps) {
+export function RepoConnector({
+  onRepoSelection,
+  onBranchSelection,
+  displayLaunchButton = true,
+}: RepoConnectorProps) {
   const { providers } = useUserProviders();
   const { data: config } = useConfig();
   const { t } = useTranslation();
@@ -26,7 +32,11 @@ export function RepoConnector({ onRepoSelection }: RepoConnectorProps) {
 
       {!providersAreSet && <ConnectToProviderMessage />}
       {providersAreSet && (
-        <RepositorySelectionForm onRepoSelection={onRepoSelection} />
+        <RepositorySelectionForm
+          onRepoSelection={onRepoSelection}
+          onBranchSelection={onBranchSelection}
+          displayLaunchButton={displayLaunchButton}
+        />
       )}
 
       {isSaaS && providersAreSet && <RepoProviderLinks />}

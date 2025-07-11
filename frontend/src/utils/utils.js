@@ -53,12 +53,14 @@ export function getAccordionDefaultValues(codebases, documents) {
   return value;
 }
 
-export function updateMermaidBlocks(parsedContent) {
+export function updateCustomBlocks(parsedContent) {
   return parsedContent.map((block) => {
+    // Process children recursively
     if (block.children && block.children.length > 0) {
-      block.children = updateMermaidBlocks(block.children);
+      block.children = updateCustomBlocks(block.children);
     }
 
+    // Handle Mermaid code blocks
     if (block.type === "codeBlock") {
       let isMermaid = false;
       if (
@@ -108,6 +110,28 @@ export function updateMermaidBlocks(parsedContent) {
         block.children = [];
       }
     }
+
+    // Handle AI Chat code blocks
+    if (
+      block.type === "codeBlock" &&
+      block.props.language === "json" &&
+      block.content &&
+      block.content[0]?.text
+    ) {
+      try {
+        const content = JSON.parse(block.content[0].text);
+        if (content?.type === "aiChat") {
+          return {
+            ...content,
+            id: block.id,
+            children: block.children || [],
+          };
+        }
+      } catch (e) {
+        console.error("Error parsing AI Chat block", e);
+      }
+    }
+
     return block;
   });
 }
@@ -184,7 +208,9 @@ export async function getTheMarkdownContentForEditor(blocksJSON, hiddenEditor) {
   hiddenEditor.replaceBlocks(hiddenEditor.document, blocksJSON);
 
   const _hiddenEditorBlocks = hiddenEditor.document;
-  const updatedBlocks = convertMermaidToCodeBlock(_hiddenEditorBlocks);
+
+  let updatedBlocks = convertAIChatToCodeBlock(_hiddenEditorBlocks);
+  updatedBlocks = convertMermaidToCodeBlock(updatedBlocks);
 
   const documentMarkdown =
     await hiddenEditor.blocksToMarkdownLossy(updatedBlocks);
@@ -201,5 +227,47 @@ export function getTheCurrentSidebarItem(pathname) {
       return link.href === "/documents";
     }
     return pathname === link.href || pathname.startsWith(`${link.href}/`);
+  });
+}
+
+export function convertAIChatToCodeBlock(blocks) {
+  return blocks.map((block) => {
+    if (block.children && block.children.length > 0) {
+      block.children = convertAIChatToCodeBlock(block.children);
+    }
+
+    if (block.type === "aiChat") {
+      const aiChatData = {
+        type: "aiChat",
+        props: {
+          state: block.props?.state || "prompting",
+          prompt: block.props?.prompt || "",
+          generatedContent: block.props?.generatedContent || "",
+          sources: Array.isArray(block.props?.sources)
+            ? block.props.sources
+            : [],
+          textColor: block.props?.textColor || "default",
+          textAlignment: block.props?.textAlignment || "left",
+        },
+      };
+
+      block.type = "codeBlock";
+      block.props = {
+        language: "json",
+        textColor: "default",
+        backgroundColor: "default",
+        textAlignment: "left",
+      };
+      block.content = [
+        {
+          type: "text",
+          text: JSON.stringify(aiChatData, null, 2),
+          styles: {},
+        },
+      ];
+      block.children = [];
+    }
+
+    return block;
   });
 }

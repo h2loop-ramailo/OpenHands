@@ -60,10 +60,7 @@ describe("ApiKeysManager", () => {
     // Find the link to the API documentation
     const link = screen.getByRole("link");
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute(
-      "href",
-      "https://code2doc.h2loop.ai/open-sdr/openwifi/a80935d/",
-    );
+    expect(link).toHaveAttribute("href", "https://h2loop.ai/");
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });

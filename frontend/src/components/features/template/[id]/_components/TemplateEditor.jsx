@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { getASingleDocument } from "../../../../../api/documents";
 import { getAllDataSourcesByWorkspaceId } from "../../../../../api/data-sources";
 import Content from "./Content";
-import {useParams} from "react-router";
-
+import { useParams } from "react-router";
 
 const TemplateEditor = () => {
   const { documentId } = useParams();
@@ -21,7 +20,8 @@ const TemplateEditor = () => {
   const fetchData = async () => {
     if (documentId) {
       setLoading(true);
-      const { success, data, errorMessage } = await getASingleDocument(documentId);
+      const { success, data, errorMessage } =
+        await getASingleDocument(documentId);
       if (!success) setError(errorMessage || "An error occurred");
       else {
         setData({
@@ -58,7 +58,7 @@ const TemplateEditor = () => {
   return (
     <div className="h-full flex-1 flex-col space-y-8 flex">
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-4 h-full">
+        <div className="col-span-5 h-full">
           <Content
             workspacId={data.workspaceId}
             docId={documentId}
@@ -66,7 +66,7 @@ const TemplateEditor = () => {
             onEditorReady={setEditor}
           />
         </div>
-        <Preview editor={editor} dataSources={data.dataSources} />
+        {/* <Preview editor={editor} dataSources={data.dataSources} /> */}
       </div>
     </div>
   );

@@ -20,10 +20,14 @@ import {
 
 interface RepositorySelectionFormProps {
   onRepoSelection: (repoTitle: string | null) => void;
+  onBranchSelection: (branchName: string | null) => void;
+  displayLaunchButton?: boolean;
 }
 
 export function RepositorySelectionForm({
   onRepoSelection,
+  onBranchSelection,
+  displayLaunchButton = true,
 }: RepositorySelectionFormProps) {
   const [selectedRepository, setSelectedRepository] =
     React.useState<GitRepository | null>(null);
@@ -70,8 +74,10 @@ export function RepositorySelectionForm({
       // Select main if it exists, otherwise select master if it exists
       if (mainBranch) {
         setSelectedBranch(mainBranch);
+        onBranchSelection(mainBranch?.name);
       } else if (masterBranch) {
         setSelectedBranch(masterBranch);
+        onBranchSelection(masterBranch?.name);
       }
     }
   }, [branches, isLoadingBranches, selectedBranch]);
@@ -98,11 +104,13 @@ export function RepositorySelectionForm({
     if (selectedRepo) onRepoSelection(selectedRepo.full_name);
     setSelectedRepository(selectedRepo || null);
     setSelectedBranch(null); // Reset branch selection when repo changes
+    onBranchSelection(null);
     branchManuallyClearedRef.current = false; // Reset the flag when repo changes
   };
 
   const handleBranchSelection = (key: React.Key | null) => {
     const selectedBranchObj = branches?.find((branch) => branch.name === key);
+    if (selectedBranch) onBranchSelection(selectedBranchObj?.name ?? "");
     setSelectedBranch(selectedBranchObj || null);
     // Reset the manually cleared flag when a branch is explicitly selected
     branchManuallyClearedRef.current = false;
@@ -113,6 +121,7 @@ export function RepositorySelectionForm({
       setSelectedRepository(null);
       setSelectedBranch(null);
       onRepoSelection(null);
+      onBranchSelection(null);
     } else if (value.startsWith("https://")) {
       const repoName = sanitizeQuery(value);
       setSearchQuery(repoName);
@@ -198,26 +207,28 @@ export function RepositorySelectionForm({
 
       {renderBranchSelector()}
 
-      <BrandButton
-        testId="repo-launch-button"
-        variant="primary"
-        type="button"
-        isDisabled={
-          !selectedRepository ||
-          isCreatingConversation ||
-          isLoadingRepositories ||
-          isRepositoriesError
-        }
-        onClick={() =>
-          createConversation({
-            selectedRepository,
-            selected_branch: selectedBranch?.name,
-          })
-        }
-      >
-        {!isCreatingConversation && "Launch"}
-        {isCreatingConversation && t("HOME$LOADING")}
-      </BrandButton>
+      {displayLaunchButton && (
+        <BrandButton
+          testId="repo-launch-button"
+          variant="primary"
+          type="button"
+          isDisabled={
+            !selectedRepository ||
+            isCreatingConversation ||
+            isLoadingRepositories ||
+            isRepositoriesError
+          }
+          onClick={() =>
+            createConversation({
+              selectedRepository,
+              selected_branch: selectedBranch?.name,
+            })
+          }
+        >
+          {!isCreatingConversation && "Launch"}
+          {isCreatingConversation && t("HOME$LOADING")}
+        </BrandButton>
+      )}
     </div>
   );
 }
